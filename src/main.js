@@ -3,8 +3,11 @@ import Antd from 'ant-design-vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import axios from './axio_config.js'
 
 import 'ant-design-vue/dist/antd.css'
+
+Object.defineProperty(Vue.prototype, '$axios', { value: axios });
 
 Vue.config.productionTip = false
 
