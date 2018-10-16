@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Antd from 'ant-design-vue'
 import App from './App.vue'
-import router from './router'
+import router from './routes/router'
 import store from './store'
 import axios from './axio_config.js'
 
