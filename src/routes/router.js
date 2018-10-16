@@ -15,84 +15,75 @@ const router = new Router({
             component: Login
         },
         {
+            path: '/admin',
+            redirect: '/admin/user'
+        },
+        {
             path: '/admin/user',
             component: Admin,
             meta: {requiresAuth: true},
             children: [
                 {
                     path: '',
-                    name: 'defaultUser',
-                    component: () => import('../views/admin/user/Users.vue')
+                    name: 'default-user',
+                    component: () => import('../views/admin/user/Info.vue')
                 },
                 {
-                    path: 'users',
-                    name: 'users',
-                    component: () => import('../views/admin/user/Users.vue')
+                    path: 'info',
+                    name: 'user-info',
+                    component: () => import('../views/admin/user/Info.vue')
                 },
                 {
-                    path: 'accounts',
-                    name: 'accounts',
-                    component: () => import('../views/admin/user/Accounts.vue')
-                },
-                {
-                    path: 'clients',
-                    name: 'clients',
-                    component: () => import('../views/admin/user/Clients.vue')
+                    path: 'edit-form',
+                    name: 'user-edit-form',
+                    component: () => import('../views/admin/user/EditForm.vue')
                 }
             ]
         },
         {
-            path: '/admin/record',
+            path: '/admin/client',
             component: Admin,
+            meta: {requiresAuth: true},
             children: [
                 {
                     path: '',
-                    name: 'defaultRecord',
-                    component: () => import('../views/admin/record/Deposits.vue')
+                    name: 'default-client',
+                    component: () => import('../views/admin/client/Info.vue')
                 },
                 {
-                    path: 'deposits',
-                    name: 'depositsRecord',
-                    component: () => import('../views/admin/record/Deposits.vue')
+                    path: 'info',
+                    name: 'client-info',
+                    component: () => import('../views/admin/client/Info.vue')
                 },
                 {
-                    path: 'drafts',
-                    name: 'draftsRecord',
-                    component: () => import('../views/admin/record/Drafts.vue')
-                },
-                {
-                    path: 'transfers',
-                    name: 'transfersRecord',
-                    component: () => import('../views/admin/record/Transfers.vue')
-                },
-                {
-                    path: 'withdrawals',
-                    name: 'withdrawalsRecord',
-                    component: () => import('../views/admin/record/Withdrawals.vue')
+                    path: 'edit-form',
+                    name: 'client-edit-form',
+                    component: () => import('../views/admin/client/EditForm.vue')
                 }
             ]
         },
         {
-            path: '/admin/interest',
+            path: '/admin/deposit-withdrawal',
             component: Admin,
+            meta: {requiresAuth: true},
             children: [
                 {
                     path: '',
-                    name: 'defaultInterest',
-                    component: () => import('../views/admin/interest/Deposits.vue')
+                    name: 'default-deposit-withdrawal',
+                    component: () => import('../views/admin/deposit-withdrawal/Deposit.vue')
                 },
                 {
-                    path: 'deposits',
-                    name: 'depositsInterest',
-                    component: () => import('../views/admin/interest/Deposits.vue')
+                    path: 'deposit',
+                    name: 'deposit',
+                    component: () => import('../views/admin/deposit-withdrawal/Deposit.vue')
                 },
                 {
-                    path: 'withdrawals',
-                    name: 'withdrawalsInterest',
-                    component: () => import('../views/admin/interest/Withdrawals.vue')
+                    path: 'withdrawal',
+                    name: 'withdrawal',
+                    component: () => import('../views/admin/deposit-withdrawal/Withdrawal.vue')
                 },
             ]
-        },
+        }
     ]
 })
 

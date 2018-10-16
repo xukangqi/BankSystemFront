@@ -3,68 +3,53 @@ export default {
         {
             id: 1,
             icon: 'user',
-            name: '账户',
+            name: '用户信息管理',
             menuItems: [
                 {
                     id: 11,
-                    name: '账户',
-                    link: '/admin/user/accounts'
+                    name: '用户信息查询',
+                    link: '/admin/user/info'
                 },
                 {
                     id: 12,
-                    name: '用户',
-                    link: '/admin/user/users'
+                    name: '用户信息维护',
+                    link: '/admin/user/edit-form'
                 },
-                {
-                    id: 13,
-                    name: '客户',
-                    link: '/admin/user/clients'
-                }
             ]
         },
         {
             id: 2,
-            icon: 'solution',
-            name: '记录',
+            icon: 'smile-o',
+            name: '客户信息管理',
             menuItems: [
                 {
                     id: 21,
-                    name: '存款记录',
-                    link: '/admin/record/deposits'
+                    name: '客户信息查询',
+                    link: '/admin/client/info'
                 },
                 {
                     id: 22,
-                    name: '取款记录',
-                    link: '/admin/record/withdrawals'
+                    name: '客户信息维护',
+                    link: '/admin/client/edit-form'
                 },
-                {
-                    id: 23,
-                    name: '转账记录',
-                    link: '/admin/record/transfers'
-                },
-                {
-                    id: 24,
-                    name: '汇票记录',
-                    link: '/admin/record/drafts'
-                }
             ]
         },
         {
             id: 3,
-            icon: 'swap',
-            name: '利率',
+            icon: 'table',
+            name: '存取款信息',
             menuItems: [
                 {
                     id: 31,
-                    name: '存款利率',
-                    link: '/admin/interest/deposits'
+                    name: '存款业务',
+                    link: '/admin/deposit-withdrawal/deposit'
                 },
                 {
                     id: 32,
-                    name: '取款利率',
-                    link: '/admin/interest/withdrawals'
+                    name: '取款业务',
+                    link: '/admin/deposit-withdrawal/withdrawal'
                 },
             ]
-        }
+        },
     ],
 }

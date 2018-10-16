@@ -1,12 +1,12 @@
 <template>
     <div>
-        Clients
+        Deposit info
     </div>
 </template>
 
 <script>
     export default {
-        name: "Clients"
+        name: "DepositInfo"
     }
 </script>
 

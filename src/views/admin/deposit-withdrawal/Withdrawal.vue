@@ -1,12 +1,12 @@
 <template>
     <div>
-        Deposits interests
+        Withdrawal table
     </div>
 </template>
 
 <script>
     export default {
-        name: "Deposits"
+        name: "WithdrawalTable"
     }
 </script>
 

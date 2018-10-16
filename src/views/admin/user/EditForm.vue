@@ -1,12 +1,12 @@
 <template>
     <div>
-        Drafts records
+        User edit form
     </div>
 </template>
 
 <script>
     export default {
-        name: "Drafts"
+        name: "UserEditForm"
     }
 </script>
 
