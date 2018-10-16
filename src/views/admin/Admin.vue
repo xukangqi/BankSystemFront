@@ -3,12 +3,6 @@
         <a-layout class="layout">
             <a-layout-header class="header">
                 <div class="logo"></div>
-                <!--上侧的Nav-->
-                <a-menu theme="dark" mode="horizontal" class="nav" :defaultSelectedKeys="[1]">
-                    <a-menu-item v-for="navItem in nav" :key="navItem.id">
-                        <router-link :to="navItem.link">{{navItem.name}}</router-link>
-                    </a-menu-item>
-                </a-menu>
             </a-layout-header>
             <a-layout>
                 <a-layout-sider width="200" >
@@ -37,12 +31,11 @@
 
 <script>
     import db from '../../db/meta'
-    const {nav, menu} = db;
+    const {menu} = db
     export default {
         name: 'admin',
         data() {
             return {
-                nav,
                 menu
             }
         },

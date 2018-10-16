@@ -1,21 +1,4 @@
 export default {
-    nav: [
-        {
-            id: 1,
-            link: '/admin/user/accounts',
-            name: '账户'
-        },
-        {
-            id: 2,
-            link: '/admin/record/deposits',
-            name: '记录'
-        },
-        {
-            id: 3,
-            link: '/admin/fund/products',
-            name: '基金'
-        }
-    ],
     menu: [
         {
             id: 1,
