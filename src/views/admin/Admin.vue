@@ -2,7 +2,7 @@
     <div class="admin">
         <a-layout class="layout">
             <a-layout-header class="header">
-                <div class="logo"></div>
+                <div class="logo">银行管理系统</div>
             </a-layout-header>
             <a-layout>
                 <a-layout-sider width="200" >
@@ -54,11 +54,13 @@
             border-right: 0;
         }
         .logo {
-            width: 120px;
-            height: 31px;
-            background: rgba(255, 255, 255, .2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin: 16px 28px 16px 0;
-            float: left;
+            height: 31px;
+            color: white;
+            font-size: 2em;
         }
         .content-wrapper {
             padding: 24px;
