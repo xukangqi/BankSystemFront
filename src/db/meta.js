@@ -51,5 +51,22 @@ export default {
                 },
             ]
         },
+        {
+            id: 4,
+            icon: 'solution',
+            name: '贷款业务',
+            menuItems: [
+                {
+                    id: 41,
+                    name: '贷款申请',
+                    link: '/admin/load/apply'
+                },
+                {
+                    id: 42,
+                    name: '贷款管理',
+                    link: '/admin/load/manage'
+                }              
+            ]
+        },
     ],
 }

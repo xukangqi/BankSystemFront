@@ -83,6 +83,27 @@ const router = new Router({
                     component: () => import('../views/admin/deposit-withdrawal/Withdrawal.vue')
                 },
             ]
+        },{
+            path: '/admin/load',
+            component: Admin,
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: '',
+                    name: 'default-load',
+                    component: () => import('../views/admin/load/loadManage.vue')
+                },
+                {
+                    path: 'manage',
+                    name: 'load-manage',
+                    component: () => import('../views/admin/load/loadManage.vue')
+                },
+                {
+                    path: 'apply',
+                    name: 'load-apply',
+                    component: () => import('../views/admin/load/loadApply.vue')
+                },
+            ]
         }
     ]
 })
