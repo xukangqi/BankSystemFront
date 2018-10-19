@@ -1,17 +1,20 @@
-import Vue from 'vue'
-import Antd from 'ant-design-vue'
-import App from './App.vue'
-import router from './routes/router'
-import store from './store'
-import axios from './axio_config.js'
+import Vue from 'vue';
+import Antd from 'ant-design-vue';
+import App from './App.vue';
+import router from './routes/router';
+import store from './store';
+// import axios from './axio_config.js';
+import axios from 'axios';
 
-import 'ant-design-vue/dist/antd.css'
+import './mock';
+
+import 'ant-design-vue/dist/antd.css';
 
 Object.defineProperty(Vue.prototype, '$axios', { value: axios });
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
-Vue.use(Antd)
+Vue.use(Antd);
 
 new Vue({
     router,

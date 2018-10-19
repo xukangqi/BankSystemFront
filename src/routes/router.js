@@ -84,25 +84,29 @@ const router = new Router({
                 },
             ]
         },{
-            path: '/admin/load',
+            path: '/admin/loan',
             component: Admin,
             meta: {requiresAuth: true},
             children: [
                 {
                     path: '',
-                    name: 'default-load',
-                    component: () => import('../views/admin/load/loadManage.vue')
+                    name: 'default-loan',
+                    component: () => import('../views/admin/loan/loanManage.vue')
                 },
                 {
                     path: 'manage',
-                    name: 'load-manage',
-                    component: () => import('../views/admin/load/loadManage.vue')
+                    name: 'loan-manage',
+                    component: () => import('../views/admin/loan/loanManage.vue')
                 },
                 {
                     path: 'apply',
-                    name: 'load-apply',
-                    component: () => import('../views/admin/load/loadApply.vue')
-                },
+                    name: 'loan-apply',
+                    component: () => import('../views/admin/loan/loanApply.vue')
+                },{
+                    path: 'temp',
+                    name: 'temp',
+                    component: () => import('../views/admin/loan/temp.vue')
+                }
             ]
         }
     ]

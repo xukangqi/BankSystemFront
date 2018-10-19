@@ -59,12 +59,20 @@ export default {
                 {
                     id: 41,
                     name: '贷款申请',
-                    link: '/admin/load/apply'
+                    link: '/admin/loan/apply'
                 },
                 {
                     id: 42,
                     name: '贷款管理',
-                    link: '/admin/load/manage'
+                    link: '/admin/loan/manage'
+                },{
+                    id: 43,
+                    name: '贷款详情',
+                    link: '/admin/loan/detail'
+                },{
+                    id: 44,
+                    name: '贷款详情',
+                    link: '/admin/loan/temp'
                 }              
             ]
         },
