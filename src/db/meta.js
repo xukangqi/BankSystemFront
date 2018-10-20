@@ -25,12 +25,12 @@ export default {
                 {
                     id: 21,
                     name: '客户信息查询',
-                    link: '/admin/client/info'
+                    link: '/admin/customer/info'
                 },
                 {
                     id: 22,
                     name: '客户信息维护',
-                    link: '/admin/client/edit-form'
+                    link: '/admin/customer/edit-form'
                 },
             ]
         },

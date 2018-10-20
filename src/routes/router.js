@@ -11,6 +11,10 @@ const router = new Router({
     routes: [
         {
             path: '/',
+            redirect: '/login'
+        },
+        {
+            path: '/login',
             name: 'login',
             component: Login
         },
@@ -41,24 +45,24 @@ const router = new Router({
             ]
         },
         {
-            path: '/admin/client',
+            path: '/admin/customer',
             component: Admin,
             meta: {requiresAuth: true},
             children: [
                 {
                     path: '',
-                    name: 'default-client',
-                    component: () => import('../views/admin/client/Info.vue')
+                    name: 'default-customer',
+                    component: () => import('../views/admin/customer/Info.vue')
                 },
                 {
                     path: 'info',
-                    name: 'client-info',
-                    component: () => import('../views/admin/client/Info.vue')
+                    name: 'customer-info',
+                    component: () => import('../views/admin/customer/Info.vue')
                 },
                 {
                     path: 'edit-form',
-                    name: 'client-edit-form',
-                    component: () => import('../views/admin/client/EditForm.vue')
+                    name: 'customer-edit-form',
+                    component: () => import('../views/admin/customer/EditForm.vue')
                 }
             ]
         },

@@ -1,32 +1,17 @@
 <template>
     <div class="login-wrapper">
-        <a-form class="login-form" @submit="handleSubmit" :autoFormCreate="(form)=>{this.form = form}">
-            <a-form-item
-                    label='用户名'
-                    :labelCol="{ span: 6 }"
-                    :wrapperCol="{ span: 12 }"
-                    fieldDecoratorId="username"
-                    :fieldDecoratorOptions="{rules: [{ required: true, message: 'Please input your username!' }]}"
-            >
-                <a-input placeholder="用户名:admin" />
-            </a-form-item>
-            <a-form-item
-                    label='密码'
-                    :labelCol="{ span: 6 }"
-                    :wrapperCol="{ span: 12 }"
-                    fieldDecoratorId="password"
-                    :fieldDecoratorOptions="{rules: [{ required: true, message: 'Please input your password!' }]}"
-            >
-                <a-input placeholder="密码:123"/>
-            </a-form-item>
-            <a-form-item
-                    :wrapperCol="{ span: 12, offset: 6 }"
-            >
-                <a-button type='primary' htmlType='submit'>
-                    登录
-                </a-button>
-            </a-form-item>
-        </a-form>
+        <Form class="login-form" :model="form" :label-width="80">
+            <h1 class="login-title">登录</h1>
+            <FormItem label="User ID">
+                <Input v-model="form.admin"></Input>
+            </FormItem>
+            <FormItem label="Password">
+                <Input v-model="form.password" type="password" placeholder="Enter password"></Input>
+            </FormItem>
+            <FormItem>
+                <Button @click="login">登录</Button>
+            </FormItem>
+        </Form>
     </div>
 </template>
 
@@ -35,42 +20,38 @@
         name: "Login",
         data() {
             return {
-                formLayout: 'horizontal',
+                form: {
+                    admin: 'admin',
+                    password: '123'
+                }
             }
         },
         methods: {
-            handleSubmit (e) {
-                e.preventDefault()
-                this.form.validateFields((err, values) => {
-                    if (!err) {
-                        console.log('Received values of form: ', values)
-                    }
-                })
-            },
-            handleSelectChange (value) {
-                console.log(value)
-                this.form.setFieldsValue({
-                    note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`,
-                })
-            },
-        },
+            login() {
+                console.log('Login with form' + JSON.stringify(this.form))
+            }
+        }
     }
 </script>
 
 <style scoped lang="scss">
     .login-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
         height: 100vh;
-        background: #eee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         .login-form {
-            padding: 64px 0 40px;
+            .login-title {
+                padding-top: 24px;
+                padding-bottom: 10px;
+                text-align: center;
+            }
+            padding: 0 40px;
+            margin: 0 auto;
             width: 40%;
+            border: 1px solid silver;
             border-radius: 4px;
-            border: 1px solid #ddd;
-            background: white;
         }
     }
 </style>
