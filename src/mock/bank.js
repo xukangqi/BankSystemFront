@@ -2,7 +2,7 @@ const Mock = require('mockjs');
 const Random = Mock.Random;
 
 export const bank = [{
-    path: '/loan/record',
+    path: '/loan/allRecord',
     type: 'get',
     data(option) {
         let req = JSON.parse(option.body);
@@ -35,8 +35,8 @@ export const bank = [{
         let result = {
             status: 200,
             msg: '',
-            data:{
-                loan:{}
+            data: {
+                loan: {}
             }
         };
         let loan = {
@@ -53,11 +53,10 @@ export const bank = [{
             loadTypeName: Random.string(1, 5),
             reviewId: Random.string(1, 5)
         };
-        result.data.loan=loan;
-        console.log(result);
+        result.data.loan = loan;
         return result;
     }
-},{
+}, {
     path: '/loan/payment',
     type: 'get',
     data(option) {
@@ -65,19 +64,66 @@ export const bank = [{
         let result = {
             status: 200,
             msg: '',
-            data:{
-                bankPayment:[]
+            data: {
+                bankPayment: []
             }
         };
-       for(let i=0;i<10;i++){
-           let payment={
-               paymentId:Random.integer(1,1000),
-               insNum:i+1,
-               paymentAmount:Random.integer(1,1000),
-               paymentDate:1539911101000
-           }; 
-           result.data.bankPayment.push(payment);
-       }
+        for (let i = 0; i < 10; i++) {
+            let payment = {
+                paymentId: Random.integer(1, 1000),
+                insNum: i + 1,
+                paymentAmount: Random.integer(1, 1000),
+                paymentDate: 1539911101000
+            };
+            result.data.bankPayment.push(payment);
+        }
+        return result;
+    }
+}, {
+    path: '/loan/interestRate',
+    type: 'get',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: {
+                bankLoadType: {}
+            }
+        };
+        result.data.bankLoadType.periodOne = Random.float(0, 5);
+        result.data.bankLoadType.periodTwo = Random.float(0, 5);
+        result.data.bankLoadType.periodThree = Random.float(0, 5);
+        // console.log(result);
+        return result;
+    }
+},{
+    path: RegExp('/loan/apply' + ".*"),
+    type: 'post',
+    data(option) {
+        let req=JSON.parse(option.body);
+        console.log(req);
+        console.log(option);
+        let result = {
+            status: 200,
+            msg: '',
+            data:{}
+        };
+         
+        return result;
+    }
+},{
+    path: RegExp('/loan/payment' + ".*"),
+    type: 'post',
+    data(option) {
+        let req=JSON.parse(option.body);
+        console.log(req);
+        console.log(option);
+        let result = {
+            status: 200,
+            msg: '',
+            data:{}
+        };
+         
         return result;
     }
 }];

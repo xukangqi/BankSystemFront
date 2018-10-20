@@ -7,7 +7,6 @@
                 <a-button type='primary' @click="() => handleSearch(selectedKeys, confirm)">Search</a-button>
                 <a-button @click="() => handleReset(clearFilters)">Reset</a-button>
             </div>
-
             <a-icon slot="filterIcon" slot-scope="filtered" type='smile-o' :style="{ color: filtered ? '#108ee9' : '#aaa' }" />
             <template slot="customRender" slot-scope="text">
                 <span v-if="searchText">
@@ -32,7 +31,7 @@
                         <p>贷款日期:{{formatDate(this.detailValue.transDate)}}</p>
                         <p>贷款金额:{{this.detailValue.loanAmount}}</p>
                         <p>分期数目:{{this.detailValue.insCount}}</p>
-                        <p>贷款利率:{{this.detailValue.loanInterest}}}</p>
+                        <p>贷款利率:{{this.detailValue.loanInterest}}</p>
                         <p>贷款总金额:{{this.detailValue.loanAmountSum}}</p>
                         <p>到期时间:{{formatDate(this.detailValue.expirationDate)}}</p>
                         <p>已收到还款:{{this.detailValue.recoveredAmount}}</p>
@@ -44,6 +43,50 @@
                         <a-table :columns="paymentColumns" :dataSource="loanPayment">
                             <!-- <a slot="action" slot-scope="text" href="javascript:;">action</a> -->
                         </a-table>
+                    </a-collapse-panel>
+                    <a-collapse-panel header="还款申请" key="3" :disabled='false'>
+                        <a-form @submit="handleSubmit" :autoFormCreate="(form)=>{this.form = form}" style="margin-top:20px">
+                            <a-form-item label='申请人' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }"
+                                fieldDecoratorId="name" :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入姓名' }]}">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label='身份证' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }"
+                                fieldDecoratorId="id" :fieldDecoratorOptions="{rules: [
+                                  {required: true, message: '请输入身份证号' },{validator: this.checkID}
+                                       ]
+                                      }">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label='手机号' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }"
+                                fieldDecoratorId="telephone" :fieldDecoratorOptions="{rules: [
+           {required: true, message: '请输入手机号' },{validator: this.checkTelephone}
+        ]
+        }">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label='账号' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="account"
+                                :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入需要还款的银行账号' }]}">
+                                <a-input />
+                            </a-form-item>
+                            <a-form-item label='还款金额' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }"
+                                fieldDecoratorId="amount" :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入还款金额' }]}">
+                                <a-input />
+                            </a-form-item>
+                            
+                             <a-form-item label='还款账户密码' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }"
+                                fieldDecoratorId="password" :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入还款账户密码' }]}">
+                                <a-input type="password" v-model="password"/>
+                            </a-form-item>
+                             <a-form-item label='重复还款账户密码' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }"
+                                fieldDecoratorId="password2" :fieldDecoratorOptions="{rules: [{ required: true, message: '请再次输入还款账户密码'},{validator: this.checkPassword}]}">
+                                <a-input  type="password"/>
+                            </a-form-item>
+                            <a-form-item :wrapperCol="{ span: 12, offset: 5 }">
+                                <a-button type='primary' htmlType='submit'>
+                                    提交还款
+                                </a-button>
+                            </a-form-item>
+                        </a-form>
                     </a-collapse-panel>
                 </a-collapse>
             </div>
@@ -74,7 +117,10 @@
         name: "LoanManage",
         data() {
             return {
+                formLayout: "horizontal",
                 data: [],
+                password:undefined,
+                DrawTransId:0,
                 detailValue: {},
                 loanPayment: [],
                 visible: false,
@@ -185,16 +231,15 @@
                 this.searchText = "";
             },
             showDrawer(value) {
-                console.log(value);
+                this.DrawTransId=value;
                 this.visible = true;
                 this.$axios({
                         method: "get",
-                        // url: "/loan/"+ value
-                        url: '/loan'
+                        url: "/loan/"+ this.DrawTransId
+                        // url: '/loan'
                     })
                     .then(res => {
                         let result = res.data;
-                        console.log(result.data);
                         let status = result.status;
                         if (status == 200) {
                             this.detailValue = result.data.loan;
@@ -215,15 +260,14 @@
 
                 this.$axios({
                         method: "get",
-                        // url: "/loan/payment"+ value
-                        url: '/loan/payment'
+                        url: "/loan/payment"+ this.DrawTransId
                     })
                     .then(res => {
                         let result = res.data;
                         let status = result.status;
                         if (status == 200) {
-                            let array=result.data.bankPayment;
-                            for(let i=0;i<array.length;i++){
+                            let array = result.data.bankPayment;
+                            for (let i = 0; i < array.length; i++) {
                                 array[i].paymentDate = this.formatDate(array[i].paymentDate);
                             }
                             this.loanPayment = array;
@@ -235,7 +279,6 @@
                         }
                     })
                     .catch(err => {
-                        console.log(err);
                         console.log("通信失败，请稍后再试");
                         this.$notification.open({
                             message: "错误",
@@ -264,17 +307,104 @@
                         break;
                 }
                 return status;
+            },
+            checkID(rule, value, callback) {
+                console.log(value);
+                if (typeof (value) === 'undefined') {
+                    callback('请输入申请人身份证号');
+                }
+                let re15 = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/;
+                let re18 = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{4}$/;
+                if (value.length == 18) {
+                    if (re18.test(value)) {
+                        callback();
+                    } else {
+                        callback("身份证号码格式不正确");
+                    }
+                } else if (value.length == 15) {
+                    if (re15.test(value)) {
+                        callback();
+                    } else {
+                        callback("身份证号码格式不正确");
+                    }
+                } else {
+                    callback("身份证号码格式不正确");
+                }
+            },
+            checkTelephone(rule, value, callback) {
+                if (typeof (value) == undefined) {
+                    callback();
+                }
+                if (!/^1[34578]\d{9}$/.test(value)) {
+                    callback("手机号码错误");
+                } else {
+                    callback();
+                }
+            },
+            checkPassword(rule, value, callback){
+                console.log(value);
+                console.log(this.password);
+               if (typeof (value) == undefined) {
+                    callback('请再次输入密码');
+                }else{
+                    if(value===this.password){
+                        callback();
+                    }else{
+                        callback('密码不一致');
+                    }
+                }
+
+            },
+            handleSubmit(e) {
+                e.preventDefault();
+                this.form.validateFields((err, values) => {
+                    if (!err) {
+                        this.$axios({
+                            method: 'post',
+                            url: '/loan/payment',
+                            params: {
+                                name: values.name,
+                                IdCard: values.id,
+                                telephone: values.telephone,
+                                account: values.account,
+                                amount: values.amount,
+                                transId:this.DrawTransId,
+                                password:values.password
+                            }
+                        }).then(res => {
+                            let result = res.data;
+                            if (result.status == 200) {
+                                this.$notification.open({
+                                    message: "申请成功",
+                                    description: '提交申请成功'
+                                });
+                                // this.$router.push('/admin/loan/manage');
+                                this.form.resetFields();
+                            } else {
+                                this.$notification.open({
+                                    message: "提交申请失败",
+                                    description: result.msg
+                                });
+                            }
+
+                        }).catch(err => {
+                            this.$notification.open({
+                                message: "错误",
+                                description: "服务器开小差了,请稍后再试"
+                            });
+                        })
+                    }
+                });
             }
         },
         mounted() {
             // console.log("开始通信");
             this.$axios({
                     method: "get",
-                    url: "/loan/record"
+                    url: "/loan/allRecord"
                 })
                 .then(res => {
                     let result = res.data;
-                    console.log(result.data);
                     let status = result.status;
                     if (status == 200) {
                         for (let i = 0; i < result.data.length; i++) {

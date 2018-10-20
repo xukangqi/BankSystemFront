@@ -65,15 +65,7 @@ export default {
                     id: 42,
                     name: '贷款管理',
                     link: '/admin/loan/manage'
-                },{
-                    id: 43,
-                    name: '贷款详情',
-                    link: '/admin/loan/detail'
-                },{
-                    id: 44,
-                    name: '贷款详情',
-                    link: '/admin/loan/temp'
-                }              
+                }           
             ]
         },
     ],

@@ -106,10 +106,6 @@ const router = new Router({
                     path: 'apply',
                     name: 'loan-apply',
                     component: () => import('../views/admin/loan/loanApply.vue')
-                },{
-                    path: 'temp',
-                    name: 'temp',
-                    component: () => import('../views/admin/loan/temp.vue')
                 }
             ]
         }
