@@ -1,7 +1,6 @@
 <template>
     <div>
         <h1>{{userInfo.userName}}</h1>
-        <a-badge :count="userInfo.userType" />
         <p>联系电话: {{userInfo.phone}}</p>
         <p>电子邮箱: {{userInfo.email}}</p>
         <p>居住地址: {{userInfo.address}}</p>
