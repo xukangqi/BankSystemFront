@@ -7,7 +7,7 @@
                 <a-button type='primary' @click="() => handleSearch(selectedKeys, confirm)">Search</a-button>
                 <a-button @click="() => handleReset(clearFilters)">Reset</a-button>
             </div>
-            <a-icon slot="filterIcon" slot-scope="filtered" type='smile-o' :style="{ color: filtered ? '#108ee9' : '#aaa' }" />
+            <a-icon slot="filterIcon" slot-scope="filtered" type='search' :style="{ color: filtered ? '#108ee9' : '#aaa' }" />
             <template slot="customRender" slot-scope="text">
                 <span v-if="searchText">
                     <template v-for="(fragment, i) in text.split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i'))">

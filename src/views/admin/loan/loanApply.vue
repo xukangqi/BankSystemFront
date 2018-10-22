@@ -28,8 +28,17 @@ n<template>
       <a-input />
     </a-form-item>
     <a-form-item label='贷款期限' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="time"
-      :fieldDecoratorOptions="{rules: [{ required: true, message: '贷款期限' }]}">
+      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入贷款期限' }]}">
       <a-input />
+    </a-form-item>
+    <a-form-item label='贷款类型' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="loanType"
+      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入贷款类型' }]}">
+      <a-select defaultValue='1' @change="handleInterestRateChange">
+        <a-select-option value='1'>住房贷款</a-select-option>
+        <a-select-option value='2'>小微贷款</a-select-option>
+        <a-select-option value='3'>消费贷款</a-select-option>
+        <a-select-option value='4'>信用贷款</a-select-option>
+      </a-select>
     </a-form-item>
 
     <a-form-item label='贷款利率' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="nouse">
@@ -97,7 +106,8 @@ n<template>
                   amount: values.amount,
                   time: values.time,
                   interestRate: this.radio,
-                  password:values.password
+                  password: values.password,
+                  loanType: values.loanType
                 }
               }).then(res => {
                 let result = res.data;
@@ -178,13 +188,37 @@ n<template>
             callback('密码不一致');
           }
         }
-
       },
+      handleInterestRateChange(value) {
+        this.$axios({
+          method: 'get',
+          url: '/loan/interestRate/' + value,
+        }).then(res => {
+          let result = res.data;
+          let status = result.status;
+          if (status == 200) {
+            this.interestRate.one = result.data.bankLoadType.periodOne;
+            this.interestRate.three = result.data.bankLoadType.periodTwo;
+            this.interestRate.five = result.data.bankLoadType.periodThree;
+          } else {
+            this.$notification.open({
+              message: '错误',
+              description: result.msg
+            });
+          }
+        }).catch(err => {
+          console.log('通信失败，请稍后再试');
+          this.$notification.open({
+            message: '错误',
+            description: '无法获得利率信息',
+          });
+        })
+      }
     },
     mounted() {
       this.$axios({
         method: 'get',
-        url: '/loan/interestRate',
+        url: '/loan/interestRate/1',
       }).then(res => {
         let result = res.data;
         let status = result.status;

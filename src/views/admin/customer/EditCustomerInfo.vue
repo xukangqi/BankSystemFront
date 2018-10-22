@@ -1,12 +1,12 @@
 <template>
     <div>
-        Client edit form
+       EditCustomerInfo
     </div>
 </template>
 
 <script>
     export default {
-        name: "ClientEditForm"
+        name: "EditCustomerInfo"
     }
 </script>
 

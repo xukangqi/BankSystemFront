@@ -52,17 +52,26 @@ const router = new Router({
                 {
                     path: '',
                     name: 'default-customer',
-                    component: () => import('../views/admin/customer/Info.vue')
+                    component: () => import('../views/admin/customer/CustomerInfo.vue')
                 },
                 {
                     path: 'info',
                     name: 'customer-info',
-                    component: () => import('../views/admin/customer/Info.vue')
+                    component: () => import('../views/admin/customer/CustomerInfo.vue')
                 },
                 {
-                    path: 'edit-form',
-                    name: 'customer-edit-form',
-                    component: () => import('../views/admin/customer/EditForm.vue')
+                    path: 'edit',
+                    name: 'customer-edit',
+                    component: () => import('../views/admin/customer/EditCustomerInfo.vue')
+                },{
+                    path: 'new',
+                    name: 'new-consumer',
+                    component: () => import('../views/admin/customer/NewConsumer.vue')
+                },{
+                    
+                    path: 'newaccount',
+                    name: 'new-account',
+                    component: () => import('../views/admin/customer/NewAccount.vue')
                 }
             ]
         },

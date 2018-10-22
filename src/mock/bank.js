@@ -80,7 +80,7 @@ export const bank = [{
         return result;
     }
 }, {
-    path: '/loan/interestRate',
+    path: '/loan/interestRate/1',
     type: 'get',
     data(option) {
         let result = {
@@ -96,34 +96,156 @@ export const bank = [{
         // console.log(result);
         return result;
     }
-},{
+}, {
+    path: '/loan/interestRate/1',
+    type: 'get',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: {
+                bankLoadType: {}
+            }
+        };
+        result.data.bankLoadType.periodOne = Random.float(0, 5);
+        result.data.bankLoadType.periodTwo = Random.float(0, 5);
+        result.data.bankLoadType.periodThree = Random.float(0, 5);
+        // console.log(result);
+        return result;
+    }
+}, {
+    path: '/loan/interestRate/2',
+    type: 'get',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: {
+                bankLoadType: {}
+            }
+        };
+        result.data.bankLoadType.periodOne = Random.float(0, 5);
+        result.data.bankLoadType.periodTwo = Random.float(0, 5);
+        result.data.bankLoadType.periodThree = Random.float(0, 5);
+        // console.log(result);
+        return result;
+    }
+}, {
+    path: '/loan/interestRate/3',
+    type: 'get',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: {
+                bankLoadType: {}
+            }
+        };
+        result.data.bankLoadType.periodOne = Random.float(0, 5);
+        result.data.bankLoadType.periodTwo = Random.float(0, 5);
+        result.data.bankLoadType.periodThree = Random.float(0, 5);
+        // console.log(result);
+        return result;
+    }
+}, {
+    path: '/loan/interestRate/4',
+    type: 'get',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: {
+                bankLoadType: {}
+            }
+        };
+        result.data.bankLoadType.periodOne = Random.float(0, 5);
+        result.data.bankLoadType.periodTwo = Random.float(0, 5);
+        result.data.bankLoadType.periodThree = Random.float(0, 5);
+        // console.log(result);
+        return result;
+    }
+}, {
     path: RegExp('/loan/apply' + ".*"),
     type: 'post',
     data(option) {
-        let req=JSON.parse(option.body);
+        let req = JSON.parse(option.body);
         console.log(req);
         console.log(option);
         let result = {
             status: 200,
             msg: '',
-            data:{}
+            data: {}
         };
-         
+
         return result;
     }
-},{
+}, {
     path: RegExp('/loan/payment' + ".*"),
     type: 'post',
     data(option) {
-        let req=JSON.parse(option.body);
+        let req = JSON.parse(option.body);
         console.log(req);
         console.log(option);
         let result = {
             status: 200,
             msg: '',
-            data:{}
+            data: {}
         };
-         
+
+        return result;
+    }
+}, {
+    path: '/customer/all',
+    type: 'get',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: []
+        };
+        for (let i = 0; i < 10; i++) {
+            let customer = {
+                custId: Random.string(3, 7),
+                custName: Random.cname(),
+                password: Random.string(3, 7),
+                identityCard: Random.string(15, 18),
+                address: Random.string(3, 7),
+                phone: Random.string(11, 11),
+                email: Random.email('123.com'),
+                sex: Random.boolean(),
+                custType: Random.integer(1, 2),
+                credit: Random.integer(1, 3)
+            };
+            result.data.push(customer);
+        }
+        // console.log(result);
+        return result;
+    }
+},{
+    path: RegExp('/customer/' + ".*"),
+    type: 'get',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: {
+                BankCustomer:{}
+            }
+        };
+            let customer = {
+                custId: Random.string(3, 7),
+                custName: Random.cname(),
+                password: Random.string(3, 7),
+                identityCard: Random.string(15, 18),
+                address: Random.string(3, 7),
+                phone: Random.string(11, 11),
+                email: Random.email('123.com'),
+                sex: Random.boolean(),
+                custType: Random.integer(1, 2),
+                credit: Random.integer(1, 3)
+            };
+            result.data.BankCustomer=customer;
+        // console.log(result);
         return result;
     }
 }];

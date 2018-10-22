@@ -19,7 +19,7 @@ export default {
         },
         {
             id: 2,
-            icon: 'smile-o',
+            icon: 'idcard',
             name: '客户信息管理',
             menuItems: [
                 {
@@ -30,8 +30,17 @@ export default {
                 {
                     id: 22,
                     name: '客户信息维护',
-                    link: '/admin/customer/edit-form'
+                    link: '/admin/customer/edit'
                 },
+                {
+                    id: 23,
+                    name: '申请开户',
+                    link: '/admin/customer/new'
+                }, {
+                    id: 24,
+                    name: '新增账户',
+                    link: '/admin/customer/newaccount'
+                }
             ]
         },
         {
