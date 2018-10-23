@@ -11,6 +11,19 @@
       <a-button type='primary' @click="() => handleSearch(selectedKeys, confirm)">查询</a-button>
       <a-button type='danger' @click="() => handleReset(clearFilters)">重置</a-button>
     </div>
+
+    <div slot="filterDropdown1" slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters }" class='custom-filter-dropdown'>
+      <a-input
+        ref="searchInput"
+        placeholder='查询收款账户'
+        :value="selectedKeys[0]"
+        @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
+        @pressEnter="() => handleSearch(selectedKeys, confirm)"
+      />
+      <a-button type='primary' @click="() => handleSearch(selectedKeys, confirm)">查询</a-button>
+      <a-button type='danger' @click="() => handleReset(clearFilters)">重置</a-button>
+    </div>
+
     <a-icon slot="filterIcon" slot-scope="filtered" type='search' :style="{ color: filtered ? '#108ee9' : '#aaa' }" />
 <template slot="customRender" slot-scope="text">
       <span v-if="searchText">
@@ -21,27 +34,7 @@
       </span>
       <template v-else>{{text}}</template>
     </template>
-    <div slot="filterDropdown1" slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters }" class='custom-filter-dropdown'>
-      <a-input
-        ref="searchInput1"
-        placeholder='查询收款账户'
-        :value="selectedKeys[0]"
-        @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
-        @pressEnter="() => handleSearch(selectedKeys, confirm)"
-      />
-      <a-button type='primary' @click="() => handleSearch(selectedKeys, confirm)">查询</a-button>
-      <a-button type='danger' @click="() => handleReset(clearFilters)">重置</a-button>
-    </div>
-    <a-icon slot="filterIcon1" slot-scope="filtered" type='search' :style="{ color: filtered ? '#108ee9' : '#aaa' }" />
-    <template slot="customRender1" slot-scope="text">
-      <span v-if="searchText">
-        <template v-for="(fragment, i) in (text+'').split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i'))">
-          <span v-if="fragment.toLowerCase() === searchText.toLowerCase()" :key="i" class="highlight">{{fragment}}</span>
-          <template v-else>{{fragment}}</template>
-        </template>
-      </span>
-      <template v-else>{{text}}</template>
-    </template>
+    
   </a-table>
 </template>
 
@@ -81,10 +74,10 @@ export default {
       loading:false,
       searchText: '',
       columns: [{
-		  title: '交易流水号',
-		  dataIndex: 'transferId',
-		  key:'transferId'
-		},
+    		  title: '交易流水号',
+    		  dataIndex: 'transferId',
+    		  key:'transferId'
+		    },
       	{
         title: '付款账户号',
         dataIndex: 'transferoutAccount',
@@ -109,17 +102,17 @@ export default {
         key: 'transferInAccount',
         scopedSlots: {
           filterDropdown: 'filterDropdown1',
-          filterIcon: 'filterIcon1',
-          customRender: 'customRender1',
+          filterIcon: 'filterIcon',
+          customRender: 'customRender',
         },
-        onFilter: (value, record) => (record.transferinAccount + "").includes(value),
+        onFilter: (value, record) => (record.transferInAccount + "").includes(value),
         onFilterDropdownVisibleChange: (visible) => {
-          if (visible) {
+          if(visible) {
             setTimeout(() => {
-              this.$refs.searchInput1.focus()
+              this.$refs.searchInput.focus()
             })
-          }
-        },
+        }
+    }
       }, {
 		  title: '转账金额',
 		  dataIndex: 'amount',

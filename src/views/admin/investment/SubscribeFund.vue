@@ -4,6 +4,78 @@
     <template slot="action" slot-scope="text, record">
          <a-button type='primary' @click="() => showDrawer(record.fundTxId)">显示详情</a-button>
     </template>
+
+    <div slot="filterDropdown1" slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters }" class='custom-filter-dropdown'>
+      <a-input
+        ref="searchInput"
+        placeholder='查询交易流水号'
+        :value="selectedKeys[0]"
+        @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
+        @pressEnter="() => handleSearch(selectedKeys, confirm)"
+      />
+      <a-button type='primary' @click="() => handleSearch(selectedKeys, confirm)">查询</a-button>
+      <a-button type='danger' @click="() => handleReset(clearFilters)">重置</a-button>
+    </div>
+
+    <div slot="filterDropdown2" slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters }" class='custom-filter-dropdown'>
+      <a-input
+        ref="searchInput"
+        placeholder='查询用户ID'
+        :value="selectedKeys[0]"
+        @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
+        @pressEnter="() => handleSearch(selectedKeys, confirm)"
+      />
+      <a-button type='primary' @click="() => handleSearch(selectedKeys, confirm)">查询</a-button>
+      <a-button type='danger' @click="() => handleReset(clearFilters)">重置</a-button>
+    </div>
+
+    <div slot="filterDropdown3" slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters }" class='custom-filter-dropdown'>
+      <a-input
+        ref="searchInput"
+        placeholder='查询账户号'
+        :value="selectedKeys[0]"
+        @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
+        @pressEnter="() => handleSearch(selectedKeys, confirm)"
+      />
+      <a-button type='primary' @click="() => handleSearch(selectedKeys, confirm)">查询</a-button>
+      <a-button type='danger' @click="() => handleReset(clearFilters)">重置</a-button>
+    </div>
+
+    <div slot="filterDropdown4" slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters }" class='custom-filter-dropdown'>
+      <a-input
+        ref="searchInput"
+        placeholder='查询基金代码'
+        :value="selectedKeys[0]"
+        @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
+        @pressEnter="() => handleSearch(selectedKeys, confirm)"
+      />
+      <a-button type='primary' @click="() => handleSearch(selectedKeys, confirm)">查询</a-button>
+      <a-button type='danger' @click="() => handleReset(clearFilters)">重置</a-button>
+    </div>
+
+    <div slot="filterDropdown5" slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters }" class='custom-filter-dropdown'>
+      <a-input
+        ref="searchInput"
+        placeholder='查询审核人ID'
+        :value="selectedKeys[0]"
+        @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
+        @pressEnter="() => handleSearch(selectedKeys, confirm)"
+      />
+      <a-button type='primary' @click="() => handleSearch(selectedKeys, confirm)">查询</a-button>
+      <a-button type='danger' @click="() => handleReset(clearFilters)">重置</a-button>
+    </div>
+
+    <a-icon slot="filterIcon" slot-scope="filtered" type='search' :style="{ color: filtered ? '#108ee9' : '#aaa'}" />
+    <template slot="customRender" slot-scope="text">
+      <span v-if="searchText">
+        <template v-for="(fragment, i) in (text+'').split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i'))">
+          <span v-if="fragment.toLowerCase() === searchText.toLowerCase()" :key="i" class="highlight">{{fragment}}</span>
+          <template v-else>{{fragment}}</template>
+        </template>
+      </span>
+      <template v-else>{{text}}</template>
+    </template>
+
   </a-table>
 
   <a-drawer
@@ -52,10 +124,66 @@
 <script>
            
 const columns = [
-  { title: '交易流水号', width: 120, dataIndex: 'fundTxId', key: 'fundTxId', fixed: 'left' },
-  { title: '用户ID', width: 100, dataIndex: 'custId', key: 'custId', fixed: 'left' },
-  { title: '账户号', dataIndex: 'account', key: 'account' },
-  { title: '基金代码', dataIndex: 'fundId', key: 'fundId' },
+  { title: '交易流水号', width: 150, dataIndex: 'fundTxId', key: 'fundTxId', fixed: 'left',
+    scopedSlots: {
+      filterDropdown: 'filterDropdown1',
+      filterIcon: 'filterIcon',
+      customRender: 'customRender',
+    },
+    onFilter: (value, record) => (record.fundTxId + "").includes(value),
+    onFilterDropdownVisibleChange: (visible) => {
+      if(visible) {
+        setTimeout(() => {
+          this.$refs.searchInput.focus()
+        })
+      }
+    }
+  },
+  { title: '用户ID', width: 150, dataIndex: 'custId', key: 'custId', fixed: 'left',
+    scopedSlots: {
+      filterDropdown: 'filterDropdown2',
+      filterIcon: 'filterIcon',
+      customRender: 'customRender',
+    },
+    onFilter: (value, record) => (record.custId + "").includes(value),
+    onFilterDropdownVisibleChange: (visible) => {
+      if(visible) {
+        setTimeout(() => {
+          this.$refs.searchInput.focus()
+        })
+      }
+    }
+  },
+  { title: '账户号', dataIndex: 'account', key: 'account',
+    scopedSlots: {
+      filterDropdown: 'filterDropdown3',
+      filterIcon: 'filterIcon',
+      customRender: 'customRender',
+    },
+    onFilter: (value, record) => (record.account + "").includes(value),
+    onFilterDropdownVisibleChange: (visible) => {
+      if(visible) {
+        setTimeout(() => {
+          this.$refs.searchInput.focus()
+        })
+      }
+    }
+  },
+  { title: '基金代码', dataIndex: 'fundId', key: 'fundId',
+    scopedSlots: {
+      filterDropdown: 'filterDropdown4',
+      filterIcon: 'filterIcon',
+      customRender: 'customRender',
+    },
+    onFilter: (value, record) => (record.fundId + "").includes(value),
+    onFilterDropdownVisibleChange: (visible) => {
+      if(visible) {
+        setTimeout(() => {
+          this.$refs.searchInput.focus()
+        })
+      }
+    }
+  },
   { title: '交易类型', dataIndex: 'type', key: 'type', 
     filters: [{
         text: "认购/申购",
@@ -71,7 +199,21 @@ const columns = [
   { title: '投资金额', dataIndex: 'amount', key: 'amount' },
   { title: '份额', dataIndex: 'share', key: 'share' },
   { title: '交易时间', dataIndex: 'txDate', key: 'txDate' },
-  { title: '审核人ID', dataIndex: 'reviewId', key: 'reviewId' },
+  { title: '审核人ID', dataIndex: 'reviewId', key: 'reviewId',
+    scopedSlots: {
+      filterDropdown: 'filterDropdown5',
+      filterIcon: 'filterIcon',
+      customRender: 'customRender',
+    },
+    onFilter: (value, record) => (record.reviewId + "").includes(value),
+    onFilterDropdownVisibleChange: (visible) => {
+      if(visible) {
+        setTimeout(() => {
+          this.$refs.searchInput.focus()
+        })
+      }
+    }
+  },
   {
     title: '操作',
     key: 'action',
@@ -89,6 +231,7 @@ export default {
       loading: false,
       detailValue:{},
       visible:false,
+      searchText: '',
       columns,
       }
   }, 
@@ -124,6 +267,15 @@ export default {
                 });
   },
   methods: {
+    handleSearch (selectedKeys, confirm) {
+      confirm()
+      this.searchText = selectedKeys[0]
+    },
+
+    handleReset (clearFilters) {
+      clearFilters()
+      this.searchText = ''
+    },
   	showDrawer(value) {
       this.visible = true;
       this.detailValue = this.showDetail(value);
@@ -144,3 +296,24 @@ export default {
   }
 }
 </script>
+<style scoped>
+.custom-filter-dropdown {
+  padding: 8px;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+}
+
+.custom-filter-dropdown input {
+  width: 130px;
+  margin-right: 8px;
+}
+
+.custom-filter-dropdown button {
+  margin-right: 8px;
+}
+
+.highlight {
+  color: #f50;
+}
+</style>
