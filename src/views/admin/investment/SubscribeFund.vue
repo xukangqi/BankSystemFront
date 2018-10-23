@@ -248,6 +248,7 @@ export default {
                     	this.loading = false;
                     	for(let i=0; i<result.data.length; i++) {
                     		result.data[i].type = (result.data[i].type==0?"认购/申购":"赎回");
+                        result.data[i].txDate = this.formatDate(result.data[i].txDate);
                     	}
                         this.data = result.data;
                         
@@ -292,6 +293,10 @@ export default {
     		}
     	}
     	return dataDetail[i];
+    },
+    formatDate(value) {
+        let date = new Date(parseInt(value) / 1000);
+        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     }
   }
 }

@@ -84,7 +84,7 @@
           <a-col :span="3"/>
           <a-col :span="18">
             <a-form-item label="旧密码" fieldDecoratorId="oldpwd" :fieldDecoratorOptions="{ rules: [{ required: true, message: '原密码不能为空' }]}">
-              <a-input placeholder="请输入原密码" />
+              <a-input placeholder="请输入原密码" type="password"/>
             </a-form-item>
           </a-col>
           <a-col :span="3"/>
@@ -93,7 +93,7 @@
           <a-col :span="3"/>
           <a-col :span="18">
             <a-form-item label="新密码" fieldDecoratorId="newpwd" :fieldDecoratorOptions="{ rules: [{ required: true, message: '新密码不能为空' }]}">
-              <a-input placeholder="请输入新密码" />
+              <a-input placeholder="请输入新密码" v-model = "newpwd" type="password" />
             </a-form-item>
           </a-col>
           <a-col :span="3"/>
@@ -101,8 +101,8 @@
         <a-row>
           <a-col :span="3"/>
           <a-col :span="18">
-            <a-form-item label="重新输入密码" fieldDecoratorId="confirmnewpwd" :fieldDecoratorOptions="{ rules: [{ required: true, message: '新密码不能为空' }]}">
-              <a-input placeholder="请输入新密码" />
+            <a-form-item label="重新输入密码" fieldDecoratorId="confirmnewpwd" :fieldDecoratorOptions="{ rules: [{ required: true, message: '新密码不能为空' },{validator: this.checkPassword}]}">
+              <a-input placeholder="请输入新密码" type="password"/>
             </a-form-item>
           </a-col>
           <a-col :span="3"/>
@@ -140,7 +140,8 @@
     export default {
         data() {
             return {
-              visible: false
+              visible: false,
+              newpwd: undefined
             }
         }, 
         methods: {
@@ -163,7 +164,18 @@
                   console.log("Received values of form: ", values);
                 }
               });
-           }
+           },
+           checkPassword(rule, value, callback) {
+            if (typeof (value) == undefined) {
+              callback('请再次输入密码');
+            } else {
+              if (value === this.newpwd) {
+                callback();
+              } else {
+                callback('密码不一致');
+              }
+            }
+          }
         },
         mounted() {
             this.form.setFieldsValue({

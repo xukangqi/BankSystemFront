@@ -90,6 +90,7 @@ export default {
                     		result.data[i].purchaseRate = result.data[i].purchaseRate.toFixed(2);
                     		result.data[i].netAssetValue = result.data[i].netAssetValue.toFixed(4);
                     		result.data[i].redemptionRate = result.data[i].redemptionRate.toFixed(2);
+                        result.data[i].recordDate = this.formatDate(result.data[i].recordDate);
                     	}
                         this.data = result.data;
                         
@@ -196,7 +197,11 @@ export default {
     		}
     	}
     	return dataDetail[i];
-    }
+    },
+    formatDate(value) {
+                let date = new Date(parseInt(value) / 1000);
+                return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+            }
   },
 }
 </script>

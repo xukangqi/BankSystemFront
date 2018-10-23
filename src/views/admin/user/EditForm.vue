@@ -1,5 +1,5 @@
 <template>
-    <div style="background-color: #ececec; padding: 20px; margin: 10px 300px 10px 300px;">
+    <div style="padding: 20px;">
         <row>
             <a-col :span="8"/>
             <a-col :span="8">

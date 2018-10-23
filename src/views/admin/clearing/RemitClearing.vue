@@ -52,7 +52,11 @@ export default {
                     let status = result.status;
                     if (status == 200) {
                     	this.loading = false;
+                      for(let i=0; i<result.data.length; i++) {
+                        result.data[i].transferDate = this.formatDate(result.data[i].transferDate);
+                      }
                         this.data = result.data;
+                      
                     } else {
                         this.$notification.open({
                             message: "错误",
@@ -133,6 +137,10 @@ export default {
       clearFilters()
       this.searchText = ''
     },
+    formatDate(value) {
+                let date = new Date(parseInt(value) / 1000);
+                return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+            }
   },
 }
 </script>

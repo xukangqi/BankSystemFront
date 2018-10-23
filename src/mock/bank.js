@@ -96,8 +96,8 @@ export const bank = [{
             transferoutAccount:Random.integer(0, 10000000000),
             transferInAccount:Random.integer(0, 10000000000),
             amount:Random.integer(0, 100000000),
-            transferDate:Random.date('yyyy-MM-dd'),
-            receiveDate:Random.date('yyyy-MM-dd')
+            transferDate:1539911101000,
+            receiveDate:1539911101000
            }; 
            result.data.push(record);
        }
@@ -120,7 +120,7 @@ export const bank = [{
             purchaseRate:Random.float(10, 100, 1, 2),
             netAssetValue:Random.float(1, 5, 1, 4),
             redemptionRate:Random.float(10, 100, 1, 2),
-            recordDate:Random.date('yyyy-MM-dd')
+            recordDate:1539911101000
            }; 
            result.data.push(record);
        }
@@ -145,7 +145,7 @@ export const bank = [{
             type:Random.integer(0, 1),
             amount: Random.integer(0, 10000000),
             share:Random.integer(1, 1000),
-            txDate:Random.date('yyyy-MM-dd'),
+            txDate:1539911101000,
             reviewId:Random.integer(0, 10000000)
            }; 
            result.data.push(record);
