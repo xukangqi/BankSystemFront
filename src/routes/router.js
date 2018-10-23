@@ -71,25 +71,33 @@ const router = new Router({
             ]
         },
         {
-            path: '/admin/deposit-withdrawal',
+            path: '/admin/money',
             component: Admin,
             meta: {requiresAuth: true},
             children: [
                 {
                     path: '',
-                    name: 'default-deposit-withdrawal',
-                    component: () => import('../views/admin/deposit-withdrawal/Deposit.vue')
+                    name: 'default',
+                    component: () => import('../views/admin/deposit-withdrawal/DepositApply.vue')
                 },
                 {
                     path: 'deposit',
                     name: 'deposit',
-                    component: () => import('../views/admin/deposit-withdrawal/Deposit.vue')
+                    component: () => import('../views/admin/deposit-withdrawal/DepositRecord.vue')
+                },{
+                    path: 'deposit/apply',
+                    name: 'deposit-apply',
+                    component: () => import('../views/admin/deposit-withdrawal/DepositApply.vue')
                 },
                 {
                     path: 'withdrawal',
                     name: 'withdrawal',
-                    component: () => import('../views/admin/deposit-withdrawal/Withdrawal.vue')
-                },
+                    component: () => import('../views/admin/deposit-withdrawal/WithdrawalRecord.vue')
+                }, {
+                    path: 'withdrawal/apply',
+                    name: 'withdrawal-apply',
+                    component: () => import('../views/admin/deposit-withdrawal/WithdrawalApply.vue')
+                }
             ]
         },{
             path: '/admin/loan',

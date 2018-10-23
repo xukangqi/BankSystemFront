@@ -45,14 +45,22 @@ export default {
             menuItems: [
                 {
                     id: 31,
-                    name: '存款业务',
-                    link: '/admin/deposit-withdrawal/deposit'
+                    name: '存款记录查询',
+                    link: '/admin/money/deposit'
+                },{
+                    id: 32,
+                    name: '办理存款',
+                    link: '/admin/money/deposit/apply'
                 },
                 {
-                    id: 32,
-                    name: '取款业务',
-                    link: '/admin/deposit-withdrawal/withdrawal'
-                },
+                    id: 33,
+                    name: '取款记录查询',
+                    link: '/admin/money/withdrawal'
+                },{
+                    id: 34,
+                    name: '办理取款',
+                    link: '/admin/money/withdrawal/apply'
+                }
             ]
         },
         {

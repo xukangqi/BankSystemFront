@@ -1,48 +1,41 @@
 n<template>
   <a-form @submit="handleSubmit" :autoFormCreate="(form)=>{this.form = form}" style="margin-top:20px">
-    <h2 style="margin-left:38%;margin-bottom:20px">贷款申请</h2>
-    <a-form-item label='申请人' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="name"
-      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入申请人姓名' }]}">
-      <a-input />
-    </a-form-item>
-    <a-form-item label='身份证' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="id"
-      :fieldDecoratorOptions="{rules: [
-           {required: true, message: '请输入申请人身份证号' },{validator: this.checkID}
-        ]
-        }">
-      <a-input />
-    </a-form-item>
-    <a-form-item label='手机号' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="phone"
-      :fieldDecoratorOptions="{rules: [
-           {required: true, message: '请输入申请人手机号' },{validator: this.checkTelephone}
-        ]
-        }">
-      <a-input />
-    </a-form-item>
+    <h2 style="margin-left:38%;margin-bottom:20px">办理存款</h2>
+  
     <a-form-item label='账号' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="account"
-      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入需要申请贷款的银行账号' }]}">
+      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入需要存入的银行账号' }]}">
       <a-input />
     </a-form-item>
-    <a-form-item label='贷款金额' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="amount"
-      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入需要贷款金额' }]}">
+    <a-form-item label='存款金额' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="amount"
+      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入需要存入的金额' }]}">
       <a-input />
     </a-form-item>
-    <a-form-item label='贷款期限' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="time"
-      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入贷款期限' }]}">
+    <a-form-item label='存款类别' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="type"
+      :fieldDecoratorOptions="{rules: [{ required: true, message: '请选择存款类别' }]}">
+      <a-select defaultValue='活期存款' @change="handleInterestRateChange">
+        <a-select-option value='活期存款'>活期存款</a-select-option>
+        <a-select-option value='整存整取'>整存整取</a-select-option>
+        <a-select-option value='零存整取'>零存整取</a-select-option>
+        <a-select-option value='整存领取'>整存领取</a-select-option>
+        <a-select-option value='存本取息'>存本取息</a-select-option>
+      </a-select>
       <a-input />
     </a-form-item>
-    <a-form-item label='贷款类型' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="loanType"
-      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入贷款类型' }]}">
-      <a-select defaultValue='1' @change="handleInterestRateChange">
-        <a-select-option value='1'>住房贷款</a-select-option>
-        <a-select-option value='2'>小微贷款</a-select-option>
-        <a-select-option value='3'>消费贷款</a-select-option>
-        <a-select-option value='4'>信用贷款</a-select-option>
+    <a-form-item label='存款时长' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="duration"
+      :fieldDecoratorOptions="{rules: [{ required: true, message: '请选择存款时常' }]}">
+      <a-select defaultValue='活期' @change="handleInterestRateChange">
+        <a-select-option value='活期'>活期</a-select-option>
+        <a-select-option value='三个月'>三个月</a-select-option>
+        <a-select-option value='半年'>半年</a-select-option>
+        <a-select-option value='一年'>一年</a-select-option>
+        <a-select-option value='二年'>二年</a-select-option>
+        <a-select-option value='三年'>三年</a-select-option>
+        <a-select-option value='五年'>五年</a-select-option>
       </a-select>
     </a-form-item>
 
-    <a-form-item label='贷款利率' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="nouse">
-      <a-popover title="规定贷款利率">
+    <a-form-item label='存款利率' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="nouse">
+      <a-popover title="规定存款利率">
         <template slot="content">
           <p>一年期以上:{{interestRate.one}}%</p>
           <p>三年期以上:{{interestRate.three}}%</p>
@@ -51,17 +44,17 @@ n<template>
         <a-input addonAfter="%" v-model="radio" />
       </a-popover>
     </a-form-item>
-    <a-form-item label='还款账户密码' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="password"
-      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入还款账户密码' }]}">
+    <a-form-item label='账户密码' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="password"
+      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入账户密码' }]}">
       <a-input type="password" v-model="password" />
     </a-form-item>
-    <a-form-item label='重复还款账户密码' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="password2"
-      :fieldDecoratorOptions="{rules: [{ required: true, message: '请再次输入还款账户密码'},{validator: this.checkPassword}]}">
+    <a-form-item label='重复账户密码' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="password2"
+      :fieldDecoratorOptions="{rules: [{ required: true, message: '请再次输入账户密码'},{validator: this.checkPassword}]}">
       <a-input type="password" />
     </a-form-item>
     <a-form-item :wrapperCol="{ span: 12, offset: 5 }">
       <a-button type='primary' htmlType='submit'>
-        提交申请
+        提交
       </a-button>
     </a-form-item>
   </a-form>
@@ -80,7 +73,7 @@ n<template>
           three: 0,
           five: 0
         },
-        radio: 0
+        radio:undefined
       };
     },
     methods: {
@@ -97,15 +90,12 @@ n<template>
               this.radio = parseFloat(this.radio);
               this.$axios({
                 method: 'post',
-                url: '/loan/apply',
+                url: '/money/deposit',
                 params: {
-                  name: values.name,
-                  IdCard: values.id,
-                  phone: values.phone,
                   account: values.account,
-                  amount: values.amount,
+                  depositMoney: values.amount,
                   time: values.time,
-                  interestRate: this.radio,
+                   depositRate: this.radio,
                   password: values.password,
                   loanType: values.loanType
                 }
@@ -142,39 +132,6 @@ n<template>
       // }.
       handleIdChange(value) {
         console.log(value);
-      },
-      checkID(rule, value, callback) {
-        console.log(value);
-        if (typeof (value) === 'undefined') {
-          callback('请输入申请人身份证号');
-        }
-        let re15 = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/;
-        let re18 = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{4}$/;
-        if (value.length == 18) {
-          if (re18.test(value)) {
-            callback();
-          } else {
-            callback("身份证号码格式不正确");
-          }
-        } else if (value.length == 15) {
-          if (re15.test(value)) {
-            callback();
-          } else {
-            callback("身份证号码格式不正确");
-          }
-        } else {
-          callback("身份证号码格式不正确");
-        }
-      },
-      checkTelephone(rule, value, callback) {
-        if (typeof (value) == undefined) {
-          callback();
-        }
-        if (!/^1[34578]\d{9}$/.test(value)) {
-          callback("手机号码错误");
-        } else {
-          callback();
-        }
       },
       checkPassword(rule, value, callback) {
         if (typeof (value) == undefined) {
@@ -216,14 +173,12 @@ n<template>
     mounted() {
       this.$axios({
         method: 'get',
-        url: '/loan/interestRate/1',
+        url: '/money/interestrate',
       }).then(res => {
         let result = res.data;
         let status = result.status;
         if (status == 200) {
-          this.interestRate.one = result.data.bankLoadType.periodOne;
-          this.interestRate.three = result.data.bankLoadType.periodTwo;
-          this.interestRate.five = result.data.bankLoadType.periodThree;
+           
         } else {
           this.$notification.open({
             message: '错误',
@@ -231,7 +186,7 @@ n<template>
           });
         }
       }).catch(err => {
-        console.log('通信失败，请稍后再试');
+        console.log(err);
         this.$notification.open({
           message: '错误',
           description: '无法获得利率信息',

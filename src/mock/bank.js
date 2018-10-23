@@ -285,4 +285,49 @@ export const bank = [{
         };
         return result;
     }
+},{
+    path: RegExp('/money/deposit/' + ".*"),
+    type: 'get',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data:[]
+        };
+        for(let i=0;i<10;i++){
+            let record={
+                depositId:Random.string(4,7),
+                depositType:Random.string(4,7),
+                depositMoney:Random.integer(10000,100000),
+                depositRate:Random.integer(1,5),
+                depositDate:1539911101000,
+                depositDuration:Random.string(4,7),
+                transferWay:Random.string(4,7),
+                reviewerId:Random.string(4,7),
+            };
+            result.data.push(record);
+        }
+        return result;
+    }
+},{
+    path: RegExp('/money/withdraw/' + ".*"),
+    type: 'get',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data:[]
+        };
+        for(let i=0;i<10;i++){
+            let record={
+                withdrawId:Random.string(4,7),
+                withdrawMoney:Random.integer(10000,100000),
+                withdrawDate:1539911101000,
+                arriveTime:1539911101000,
+                reviewerId:Random.string(4,7),
+            };
+            result.data.push(record);
+        }
+        return result;
+    }
 }];
