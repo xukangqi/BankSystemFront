@@ -29,15 +29,10 @@ export default {
                 },
                 {
                     id: 22,
-                    name: '客户信息维护',
-                    link: '/admin/customer/edit'
-                },
-                {
-                    id: 23,
                     name: '申请开户',
                     link: '/admin/customer/new'
                 }, {
-                    id: 24,
+                    id: 23,
                     name: '新增账户',
                     link: '/admin/customer/newaccount'
                 }
@@ -45,7 +40,7 @@ export default {
         },
         {
             id: 3,
-            icon: 'table',
+            icon: 'pay-circle-o',
             name: '存取款信息',
             menuItems: [
                 {

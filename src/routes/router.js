@@ -58,11 +58,6 @@ const router = new Router({
                     path: 'info',
                     name: 'customer-info',
                     component: () => import('../views/admin/customer/CustomerInfo.vue')
-                },
-                {
-                    path: 'edit',
-                    name: 'customer-edit',
-                    component: () => import('../views/admin/customer/EditCustomerInfo.vue')
                 },{
                     path: 'new',
                     name: 'new-consumer',

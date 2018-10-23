@@ -21,7 +21,7 @@
                 <a-button type='primary' @click="() => showDrawer(record.transId)">显示详情</a-button>
             </template>
         </a-table>
-        <a-drawer title="Create" width=720 placement="right" :closable="false" @close="onClose" :visible="visible"
+        <a-drawer title="贷款详情" width=720 placement="right" :closable="false" @close="onClose" :visible="visible"
             style="height: calc(100% - 55px);overflow: 'auto';paddingBottom: 53px">
             <div>
                 <a-collapse accordion>
@@ -130,12 +130,13 @@
                         title: "交易流水号",
                         dataIndex: "transId",
                         key: "transId",
-                        width: 100,
+                        width: 120,
                         fixed: 'left'
                     },
                     {
                         title: "Name",
                         dataIndex: "name",
+                        width: 100,
                         key: "name",
                         scopedSlots: {
                             filterDropdown: "filterDropdown",
@@ -154,26 +155,31 @@
                     },
                     {
                         title: "贷款日期",
+                        width: 120,
                         dataIndex: "loanDate",
                         key: "loanDate"
                     },
                     {
                         title: "贷款金额",
+                        width: 140,
                         dataIndex: "loanAmount",
                         key: "loanAmount"
                     },
                     {
                         title: "贷款总金额",
+                        width: 140,
                         dataIndex: "loanAmountSum",
                         key: "loanAmountSum"
                     },
                     {
                         title: "已收到金额",
+                        width: 140,
                         dataIndex: "recoveredAmount",
                         key: "recoveredAmount"
                     },
                     {
                         title: "贷款状态",
+                        width: 100,
                         dataIndex: "loanStatus",
                         key: "loanStatus",
                         filters: [{
@@ -197,8 +203,7 @@
                         scopedSlots: {
                             customRender: "operation"
                         },
-                        width: 70,
-                        fixed: 'right'
+                        width: 70
                     }
                 ],
                 paymentColumns: [{

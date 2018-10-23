@@ -2,7 +2,7 @@
     <div class="admin">
         <a-layout class="layout">
             <a-layout-sider width="200">
-                <h2 class="logo">银行管理系统</h2>
+                <h2 class="logo">银行基本业务系统</h2>
                 <!--左侧菜单栏-->
                 <a-menu theme="dark" mode="inline" class="menu" :defaultSelectedKeys="[11]" :defaultOpenKeys="[1]">
                     <a-sub-menu v-for="subMenu in menu" :key="subMenu.id">
