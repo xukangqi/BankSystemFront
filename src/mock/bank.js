@@ -222,7 +222,8 @@ export const bank = [{
         return result;
     }
 },{
-    path: RegExp('/customer/' + ".*"),
+    // path: RegExp('/customer/' + ".*"),
+    path:'/customer/123',
     type: 'get',
     data(option) {
         let result = {
@@ -246,6 +247,42 @@ export const bank = [{
             };
             result.data.BankCustomer=customer;
         // console.log(result);
+        return result;
+    }
+},{
+    path: RegExp('/customer/account/' + ".*"),
+    type: 'get',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: []
+        };
+        for(let i=0;i<5;i++){
+            let account = {
+                account:Random.string(13, 15),
+                depositBank:Random.string(3, 7),
+                balances:Random.integer(10000,100000),
+                blockedBalances:Random.integer(10000,100000),
+                accountType:Random.integer(1, 2),
+                accountKind: Random.integer(1, 3),
+                accountStatus:Random.integer(1, 3)
+            };
+            result.data.push(account);
+        }
+           
+        // console.log(result);
+        return result;
+    }
+},{
+    path: RegExp('/customer/account/delete' + ".*"),
+    type: 'post',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data:''
+        };
         return result;
     }
 }];

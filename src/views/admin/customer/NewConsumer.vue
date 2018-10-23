@@ -105,7 +105,7 @@
                             params: {
                                 custName: values.custName,
                                 identityCard: values.identityCard,
-                                telephone: values.telephone,
+                                phone: values.phone,
                                 address: addr,
                                 password: values.password,
                                 email: values.email,
