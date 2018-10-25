@@ -1,7 +1,7 @@
 n<template>
   <a-form @submit="handleSubmit" :autoFormCreate="(form)=>{this.form = form}" style="margin-top:20px">
     <h2 style="margin-left:38%;margin-bottom:20px">办理存款</h2>
-  
+
     <a-form-item label='账号' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="account"
       :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入需要存入的银行账号' }]}">
       <a-input />
@@ -12,18 +12,17 @@ n<template>
     </a-form-item>
     <a-form-item label='存款类别' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="type"
       :fieldDecoratorOptions="{rules: [{ required: true, message: '请选择存款类别' }]}">
-      <a-select defaultValue='活期存款' @change="handleInterestRateChange">
+      <a-select defaultValue='活期存款' @change="handleTypeChange">
         <a-select-option value='活期存款'>活期存款</a-select-option>
         <a-select-option value='整存整取'>整存整取</a-select-option>
         <a-select-option value='零存整取'>零存整取</a-select-option>
         <a-select-option value='整存领取'>整存领取</a-select-option>
         <a-select-option value='存本取息'>存本取息</a-select-option>
       </a-select>
-      <a-input />
     </a-form-item>
     <a-form-item label='存款时长' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="duration"
-      :fieldDecoratorOptions="{rules: [{ required: true, message: '请选择存款时常' }]}">
-      <a-select defaultValue='活期' @change="handleInterestRateChange">
+      :fieldDecoratorOptions="{rules: [{ required: true, message: '请选择存款时长' }]}">
+      <a-select defaultValue='活期'>
         <a-select-option value='活期'>活期</a-select-option>
         <a-select-option value='三个月'>三个月</a-select-option>
         <a-select-option value='半年'>半年</a-select-option>
@@ -34,12 +33,19 @@ n<template>
       </a-select>
     </a-form-item>
 
+    <a-form-item label='转存方式' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="transferWay"
+      :fieldDecoratorOptions="{rules: [{ required: true, message: '请选择转存方式' }]}">
+      <a-select defaultValue='自动转存'>
+        <a-select-option value='自动转存'>自动转存</a-select-option>
+        <a-select-option value='到期存活'>到期存活</a-select-option>
+
+      </a-select>
+    </a-form-item>
+
     <a-form-item label='存款利率' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="nouse">
       <a-popover title="规定存款利率">
-        <template slot="content">
-          <p>一年期以上:{{interestRate.one}}%</p>
-          <p>三年期以上:{{interestRate.three}}%</p>
-          <p>五年期以上:{{interestRate.five}}%</p>
+        <template slot="content" v-for="item in nowRate">
+          <p>{{item.name}}:{{item.interest}}%</p>
         </template>
         <a-input addonAfter="%" v-model="radio" />
       </a-popover>
@@ -62,18 +68,14 @@ n<template>
 
 <script>
   export default {
-    name: "LoadApply",
+    name: "DepositApply",
     data() {
       return {
         password: undefined,
         formLayout: "horizontal",
-        interestRate: {
-          // updateTime:'',
-          one: 0,
-          three: 0,
-          five: 0
-        },
-        radio:undefined
+        interestRate: {},
+        nowRate: [],
+        radio: undefined
       };
     },
     methods: {
@@ -94,22 +96,23 @@ n<template>
                 params: {
                   account: values.account,
                   depositMoney: values.amount,
-                  time: values.time,
-                   depositRate: this.radio,
-                  password: values.password,
-                  loanType: values.loanType
+                  depositType: values.type,
+                  depositDuration: values.duration,
+                  transferWay: values.transferWay,
+                  depositRate: this.radio,
+                  password: values.password
                 }
               }).then(res => {
                 let result = res.data;
                 if (result.status == 200) {
                   this.$notification.open({
-                    message: "申请成功",
-                    description: '提交申请成功'
+                    message: "存款成功",
+                    description: '提交存款成功'
                   });
-                  this.$router.push('/admin/loan/manage');
+                  this.form.resetFields();
                 } else {
                   this.$notification.open({
-                    message: "提交申请失败",
+                    message: "提交存款失败",
                     description: result.msg
                   });
                 }
@@ -130,6 +133,66 @@ n<template>
       //         note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`,
       //     })
       // }.
+      handleTypeChange(value) {
+        if (value == '活期存款') {
+          let interest = {
+            name: '活期利率',
+            interest: this.interestRate.currentRate
+          }
+          this.nowRate = [];
+          this.nowRate.push(interest);
+
+        } else if (value == '整存整取') {
+          this.nowRate = [];
+          let interest = {
+            name: '三个月利率',
+            interest: this.interestRate.zczqTmRate
+          }
+          this.nowRate.push(interest);
+          interest = {
+            name: '六个月利率',
+            interest: this.interestRate.zczqHyRate
+          }
+          this.nowRate.push(interest);
+          interest = {
+            name: '一年利率',
+            interest: this.interestRate.zczqOyRate
+          }
+          this.nowRate.push(interest);
+          interest = {
+            name: '两年利率',
+            interest: this.interestRate.zczqTwyRate
+          }
+          this.nowRate.push(interest);
+          interest = {
+            name: '三年利率',
+            interest: this.interestRate.zczqTyRate
+          }
+          this.nowRate.push(interest);
+          interest = {
+            name: '五年利率',
+            interest: this.interestRate.zczqFyRate
+          }
+          this.nowRate.push(interest);
+        } else {
+          this.nowRate = [];
+          let interest = {
+            name: '一年利率',
+            interest: this.interestRate.otherOyRate
+          }
+          this.nowRate.push(interest);
+          interest = {
+            name: '三年利率',
+            interest: this.interestRate.otherTyRate
+          }
+          this.nowRate.push(interest);
+          interest = {
+            name: '五年利率',
+            interest: this.interestRate.otherFyRate
+          }
+          this.nowRate.push(interest);
+        }
+      },
       handleIdChange(value) {
         console.log(value);
       },
@@ -172,26 +235,31 @@ n<template>
     },
     mounted() {
       this.$axios({
-        method: 'get',
         url: '/money/interestrate',
+        method: 'get'
       }).then(res => {
         let result = res.data;
         let status = result.status;
         if (status == 200) {
-           
+          this.interestRate = result.data;
+          let interest = {
+            name: '活期利率',
+            interest: this.interestRate.currentRate
+          }
+          this.nowRate.push(interest);
         } else {
           this.$notification.open({
-            message: '错误',
+            message: "获取利率失败",
             description: result.msg
           });
         }
       }).catch(err => {
         console.log(err);
         this.$notification.open({
-          message: '错误',
-          description: '无法获得利率信息',
+          message: "错误",
+          description: "服务器开小差了,请稍后再试"
         });
-      })
+      });
     }
   };
 </script>

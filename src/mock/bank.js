@@ -221,35 +221,35 @@ export const bank = [{
         // console.log(result);
         return result;
     }
-},{
+}, {
     // path: RegExp('/customer/' + ".*"),
-    path:'/customer/123',
+    path: '/customer/123',
     type: 'get',
     data(option) {
         let result = {
             status: 200,
             msg: '',
             data: {
-                BankCustomer:{}
+                BankCustomer: {}
             }
         };
-            let customer = {
-                custId: Random.string(3, 7),
-                custName: Random.cname(),
-                password: Random.string(3, 7),
-                identityCard: Random.string(15, 18),
-                address: Random.string(3, 7),
-                phone: Random.string(11, 11),
-                email: Random.email('123.com'),
-                sex: Random.boolean(),
-                custType: Random.integer(1, 2),
-                credit: Random.integer(1, 3)
-            };
-            result.data.BankCustomer=customer;
+        let customer = {
+            custId: Random.string(3, 7),
+            custName: Random.cname(),
+            password: Random.string(3, 7),
+            identityCard: Random.string(15, 18),
+            address: Random.string(3, 7),
+            phone: Random.string(11, 11),
+            email: Random.email('123.com'),
+            sex: Random.boolean(),
+            custType: Random.integer(1, 2),
+            credit: Random.integer(1, 3)
+        };
+        result.data.BankCustomer = customer;
         // console.log(result);
         return result;
     }
-},{
+}, {
     path: RegExp('/customer/account/' + ".*"),
     type: 'get',
     data(option) {
@@ -258,76 +258,100 @@ export const bank = [{
             msg: '',
             data: []
         };
-        for(let i=0;i<5;i++){
+        for (let i = 0; i < 5; i++) {
             let account = {
-                account:Random.string(13, 15),
-                depositBank:Random.string(3, 7),
-                balances:Random.integer(10000,100000),
-                blockedBalances:Random.integer(10000,100000),
-                accountType:Random.integer(1, 2),
+                account: Random.string(13, 15),
+                depositBank: Random.string(3, 7),
+                balances: Random.integer(10000, 100000),
+                blockedBalances: Random.integer(10000, 100000),
+                accountType: Random.integer(1, 2),
                 accountKind: Random.integer(1, 3),
-                accountStatus:Random.integer(1, 3)
+                accountStatus: Random.integer(1, 3)
             };
             result.data.push(account);
         }
-           
+
         // console.log(result);
         return result;
     }
-},{
+}, {
     path: RegExp('/customer/account/delete' + ".*"),
     type: 'post',
     data(option) {
         let result = {
             status: 200,
             msg: '',
-            data:''
+            data: ''
         };
         return result;
     }
-},{
+}, {
     path: RegExp('/money/deposit/' + ".*"),
     type: 'get',
     data(option) {
         let result = {
             status: 200,
             msg: '',
-            data:[]
+            data: []
         };
-        for(let i=0;i<10;i++){
-            let record={
-                depositId:Random.string(4,7),
-                depositType:Random.string(4,7),
-                depositMoney:Random.integer(10000,100000),
-                depositRate:Random.integer(1,5),
-                depositDate:1539911101000,
-                depositDuration:Random.string(4,7),
-                transferWay:Random.string(4,7),
-                reviewerId:Random.string(4,7),
+        for (let i = 0; i < 10; i++) {
+            let record = {
+                depositId: Random.string(4, 7),
+                depositType: Random.string(4, 7),
+                depositMoney: Random.integer(10000, 100000),
+                depositRate: Random.integer(1, 5),
+                depositDate: 1539911101000,
+                depositDuration: Random.string(4, 7),
+                transferWay: Random.string(4, 7),
+                reviewerId: Random.string(4, 7),
             };
             result.data.push(record);
         }
         return result;
     }
-},{
+}, {
     path: RegExp('/money/withdraw/' + ".*"),
     type: 'get',
     data(option) {
         let result = {
             status: 200,
             msg: '',
-            data:[]
+            data: []
         };
-        for(let i=0;i<10;i++){
-            let record={
-                withdrawId:Random.string(4,7),
-                withdrawMoney:Random.integer(10000,100000),
-                withdrawDate:1539911101000,
-                arriveTime:1539911101000,
-                reviewerId:Random.string(4,7),
+        for (let i = 0; i < 10; i++) {
+            let record = {
+                withdrawId: Random.string(4, 7),
+                withdrawMoney: Random.integer(10000, 100000),
+                withdrawDate: 1539911101000,
+                arriveTime: 1539911101000,
+                reviewerId: Random.string(4, 7),
             };
             result.data.push(record);
         }
+        return result;
+    }
+}, {
+    path: '/money/interestrate',
+    type: 'get',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: {}
+        };
+        let data = {
+            currentRate: 0.35,
+            zczqTmRate: 1.1,
+            zczqHyRate: 1.3,
+            zczqOyRate: 1.5,
+            zczqTwyRate: 2.1,
+            zczqTyRate: 2.75,
+            zczqFyRate: 3.2,
+            otherOyRate: 1.3,
+            otherTyRate: 2.5,
+            otherFyRate: 3.0
+        }
+        result.data=data;
         return result;
     }
 }];

@@ -80,7 +80,7 @@ n<template>
           three: 0,
           five: 0
         },
-        radio: 0
+        radio: undefined
       };
     },
     methods: {
