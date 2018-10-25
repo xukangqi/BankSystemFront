@@ -354,4 +354,25 @@ export const bank = [{
         result.data=data;
         return result;
     }
+},{
+    path: RegExp('/user/login' + ".*"),
+    type: 'post',
+    data(option) {
+        console.log('get111');
+        let result = {
+            status: 200,
+            msg: '',
+            data: {}
+        };
+        let data = {
+            userId: '1',
+            userName: '张三',
+            userType: 'VIP',
+            phone: '1234567890',
+            address: '12400 Imperial Hwy, Norwalk, CA 90650',
+            email: "zhangsuan@qq.com"
+        }
+        result.data=data;
+        return result;
+    }
 }];

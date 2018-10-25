@@ -44,7 +44,7 @@ n<template>
             return {
                 password: undefined,
                 formLayout: "horizontal",
-                
+                reviewerId:undefined
             };
         },
         methods: {
@@ -61,7 +61,8 @@ n<template>
                                 phone: values.phone,
                                 account: values.account,
                                 withdrawMoney: values.type,
-                                password: values.password
+                                password: values.password,
+                                reviewerId:this.reviewerId
                             }
                         }).then(res => {
                             let result = res.data;
@@ -115,6 +116,7 @@ n<template>
             }
         },
         mounted() {
+      this.reviewerId=this.$store.getters.user.userId;
             
         }
     };

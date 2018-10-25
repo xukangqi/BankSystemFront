@@ -1,4 +1,4 @@
-n<template>
+<template>
   <a-form @submit="handleSubmit" :autoFormCreate="(form)=>{this.form = form}" style="margin-top:20px">
     <h2 style="margin-left:38%;margin-bottom:20px">贷款申请</h2>
     <a-form-item label='申请人' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="name"
@@ -80,7 +80,8 @@ n<template>
           three: 0,
           five: 0
         },
-        radio: undefined
+        radio: undefined,
+        reviewerId:undefined
       };
     },
     methods: {
@@ -107,7 +108,8 @@ n<template>
                   time: values.time,
                   interestRate: this.radio,
                   password: values.password,
-                  loanType: values.loanType
+                  loanType: values.loanType,
+                  reviewerId:this.reviewerId
                 }
               }).then(res => {
                 let result = res.data;
@@ -214,6 +216,7 @@ n<template>
       }
     },
     mounted() {
+      this.reviewerId=this.$store.getters.user.userId;
       this.$axios({
         method: 'get',
         url: '/loan/interestRate/1',

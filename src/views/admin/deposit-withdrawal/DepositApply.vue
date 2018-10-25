@@ -75,7 +75,8 @@ n<template>
         formLayout: "horizontal",
         interestRate: {},
         nowRate: [],
-        radio: undefined
+        radio: undefined,
+        reviewerId: undefined
       };
     },
     methods: {
@@ -100,7 +101,8 @@ n<template>
                   depositDuration: values.duration,
                   transferWay: values.transferWay,
                   depositRate: this.radio,
-                  password: values.password
+                  password: values.password,
+                  reviewerId: this.reviewerId
                 }
               }).then(res => {
                 let result = res.data;
@@ -127,12 +129,7 @@ n<template>
           }
         });
       },
-      // handleSelectChange(value) {
-      //     console.log(value)
-      //     this.form.setFieldsValue({
-      //         note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`,
-      //     })
-      // }.
+
       handleTypeChange(value) {
         if (value == '活期存款') {
           let interest = {
@@ -206,34 +203,10 @@ n<template>
             callback('密码不一致');
           }
         }
-      },
-      handleInterestRateChange(value) {
-        this.$axios({
-          method: 'get',
-          url: '/loan/interestRate/' + value,
-        }).then(res => {
-          let result = res.data;
-          let status = result.status;
-          if (status == 200) {
-            this.interestRate.one = result.data.bankLoadType.periodOne;
-            this.interestRate.three = result.data.bankLoadType.periodTwo;
-            this.interestRate.five = result.data.bankLoadType.periodThree;
-          } else {
-            this.$notification.open({
-              message: '错误',
-              description: result.msg
-            });
-          }
-        }).catch(err => {
-          console.log('通信失败，请稍后再试');
-          this.$notification.open({
-            message: '错误',
-            description: '无法获得利率信息',
-          });
-        })
       }
     },
     mounted() {
+      this.reviewerId=this.$store.getters.user.userId;
       this.$axios({
         url: '/money/interestrate',
         method: 'get'
