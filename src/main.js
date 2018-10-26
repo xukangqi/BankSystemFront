@@ -14,7 +14,6 @@ import 'iview/dist/styles/iview.css';
 
 
 Object.defineProperty(Vue.prototype, '$axios', { value: axios });
-// Object.defineProperty(Vue.prototype, '$store', { value: storeUser });
 
 
 Vue.config.productionTip = false;

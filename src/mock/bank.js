@@ -358,7 +358,6 @@ export const bank = [{
     path: RegExp('/user/login' + ".*"),
     type: 'post',
     data(option) {
-        console.log('get111');
         let result = {
             status: 200,
             msg: '',
@@ -373,6 +372,17 @@ export const bank = [{
             email: "zhangsuan@qq.com"
         }
         result.data=data;
+        return result;
+    }
+},{
+    path: RegExp('/user/register' + ".*"),
+    type: 'post',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: 1
+        };
         return result;
     }
 }];
