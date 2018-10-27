@@ -44,7 +44,7 @@ export default {
 		this.loading = true;
 		this.$axios({
                     method: "get",
-                    url: "/clearing/draftrecord"
+                    url: "/clearing/transferlog"
                 })
                 .then(res => {
                     let result = res.data;
@@ -83,14 +83,14 @@ export default {
 		},
       	{
         title: '付款账户号',
-        dataIndex: 'transferoutAccount',
-        key: 'transferoutAccount',
+        dataIndex: 'transferOutAccount',
+        key: 'transferOutAccount',
         scopedSlots: {
           filterDropdown: 'filterDropdown',
           filterIcon: 'filterIcon',
           customRender: 'customRender',
         },
-        onFilter: (value, record) => (record.transferoutAccount + "").includes(value),
+        onFilter: (value, record) => (record.transferOutAccount + "").includes(value),
         onFilterDropdownVisibleChange: (visible) => {
           if (visible) {
             setTimeout(() => {

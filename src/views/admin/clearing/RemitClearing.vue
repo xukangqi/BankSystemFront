@@ -45,7 +45,7 @@ export default {
 		this.loading = true;
 		this.$axios({
                     method: "get",
-                    url: "/clearing/draftrecord"
+                    url: "/clearing/remitlog"
                 })
                 .then(res => {
                     let result = res.data;
@@ -53,7 +53,7 @@ export default {
                     if (status == 200) {
                     	this.loading = false;
                       for(let i=0; i<result.data.length; i++) {
-                        result.data[i].transferDate = this.formatDate(result.data[i].transferDate);
+                        result.data[i].remitGenerateDate = this.formatDate(result.data[i].remitGenerateDate);
                       }
                         this.data = result.data;
                       
@@ -79,19 +79,19 @@ export default {
       searchText: '',
       columns: [{
     		  title: '交易流水号',
-    		  dataIndex: 'transferId',
-    		  key:'transferId'
+    		  dataIndex: 'remitId',
+    		  key:'remitId'
 		    },
       	{
         title: '付款账户号',
-        dataIndex: 'transferoutAccount',
-        key: 'transferoutAccount',
+        dataIndex: 'remitOutAccount',
+        key: 'remitOutAccount',
         scopedSlots: {
           filterDropdown: 'filterDropdown',
           filterIcon: 'filterIcon',
           customRender: 'customRender',
         },
-        onFilter: (value, record) => (record.transferoutAccount + "").includes(value),
+        onFilter: (value, record) => (record.remitOutAccount + "").includes(value),
         onFilterDropdownVisibleChange: (visible) => {
           if (visible) {
             setTimeout(() => {
@@ -102,14 +102,14 @@ export default {
       },
       {
         title: '收款账户号',
-        dataIndex: 'transferInAccount',
-        key: 'transferInAccount',
+        dataIndex: 'remitInAccount',
+        key: 'remitInAccount',
         scopedSlots: {
           filterDropdown: 'filterDropdown1',
           filterIcon: 'filterIcon',
           customRender: 'customRender',
         },
-        onFilter: (value, record) => (record.transferInAccount + "").includes(value),
+        onFilter: (value, record) => (record.remitInAccount + "").includes(value),
         onFilterDropdownVisibleChange: (visible) => {
           if(visible) {
             setTimeout(() => {
@@ -122,7 +122,7 @@ export default {
 		  dataIndex: 'amount',
 		}, {
 		  title: '汇票生成时间',
-		  dataIndex: 'transferDate',
+		  dataIndex: 'remitGenerateDate',
 		}],    
 	}
   },

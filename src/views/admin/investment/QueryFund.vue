@@ -48,7 +48,7 @@
               <p>申购费率：{{detailValue.purchaseRate}}%</p>
               <p>基金单位净值：{{detailValue.netAssetValue}}</p>
               <p>赎回费率：{{detailValue.redemptionRate}}%</p>
-              <p>记录时间：{{detailValue.recordDate}}</p>
+              <p>记录时间：{{detailValue.purchaseDate}}</p>
             </a-card>
            </div>
         </a-collapse-panel>
@@ -56,6 +56,15 @@
           <div style="background:#ECECEC; padding:30px;">
             <a-card :bordered="false" style="width: 300px" hoverable>
               <a-form layout="vertical" :autoFormCreate="(form)=>{this.form = form}">
+                <a-row>
+                  <a-col :span="3"/>
+                  <a-col :span="18">
+                    <a-form-item label="基金代码" fieldDecoratorId="fundId">
+                      <a-col :span="8" :offset="6">{{this.detailValue.fundId}}</a-col>
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="3"/>
+                </a-row>
                 <a-row>
                   <a-col :span="3"/>
                   <a-col :span="18">
@@ -89,7 +98,7 @@
                   <a-col :span="3"/>
                   <a-col :span="18">
                     <a-form-item label="交易类型" fieldDecoratorId="type">
-                      <a-col :span="8" :offset="8">{{this.tradeType}}</a-col>
+                      <a-col :span="8" :offset="8">{{this.detailValue.type}}</a-col>
                     </a-form-item>
                   </a-col>
                   <a-col :span="3"/>
@@ -182,7 +191,7 @@ export default {
                     		result.data[i].purchaseRate = result.data[i].purchaseRate.toFixed(2);
                     		result.data[i].netAssetValue = result.data[i].netAssetValue.toFixed(4);
                     		result.data[i].redemptionRate = result.data[i].redemptionRate.toFixed(2);
-                        result.data[i].recordDate = this.formatDate(result.data[i].recordDate);
+                        result.data[i].purchaseDate = this.formatDate(result.data[i].purchaseDate);
                     	}
                         this.data = result.data;
                         
@@ -208,7 +217,6 @@ export default {
       visible: false,
       searchText: '',
       detailValue: {},
-      tradeType: '',
       pwd: undefined,
       columns: [
       	{
@@ -254,7 +262,7 @@ export default {
 		  dataIndex: 'redemptionRate',
 		}, {
 		  title: '记录时间',
-		  dataIndex: 'recordDate',
+		  dataIndex: 'purchaseDate',
 		}, {
 			title: '操作',
 			dataIndex: 'operation',
@@ -277,21 +285,38 @@ export default {
     },
     showDrawer(value) {
       this.visible = true;
-      this.detailValue = this.showDetail(value);
-      this.tradeType = this.detailValue.type;
+      this.$axios({
+                    method: "get",
+                    url: "/investment/funddetail"
+                })
+                .then(res => {
+                    let result = res.data;
+                    let status = result.status;
+                    let fundDetail = result.data.fundDetail;
+                    if (status == 200) {
+                      fundDetail.type = (fundDetail.type==0?"认购":"申购");
+                      fundDetail.purchaseRate = fundDetail.purchaseRate.toFixed(2);
+                      fundDetail.netAssetValue = fundDetail.netAssetValue.toFixed(4);
+                      fundDetail.redemptionRate = fundDetail.redemptionRate.toFixed(2);
+                      fundDetail.purchaseDate = this.formatDate(fundDetail.purchaseDate);
+                      this.detailValue = fundDetail;   
+                    } else {
+                        this.$notification.open({
+                            message: "错误",
+                            description: result.msg
+                        });
+                    }
+                })
+                .catch(err => {
+                    console.log("通信失败，请稍后再试");
+                    this.$notification.open({
+                        message: "错误",
+                        description: "服务器开小差了,请稍后再试"
+                    });
+                });
     },
     onClose() {
       this.visible = false
-    },
-    showDetail(fundId){
-    	let dataDetail = this.data;
-    	let i;
-    	for(i=0; i<dataDetail.length; i++) {
-    		if(dataDetail[i].fundId == fundId) {
-    			break;
-    		}
-    	}
-    	return dataDetail[i];
     },
     formatDate(value) {
                 let date = new Date(parseInt(value) / 1000);
@@ -301,7 +326,8 @@ export default {
               e.preventDefault();
               this.form.validateFields((err, values) => {
                 if (!err) {
-                  values.type = this.tradeType;
+                  values.fundId = this.detailValue.fundId;
+                  values.type = this.detailValue.type;
                   console.log("Received values of form: ", values);
                 }
               });

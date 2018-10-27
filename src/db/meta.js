@@ -100,12 +100,12 @@ export default {
             menuItems: [
                 {
                     id: 61,
-                    name: '基金查询',
+                    name: '基金查询与认购',
                     link: '/admin/investment/query-fund'
                 },
                 {
                     id: 62,
-                    name: '基金认购',
+                    name: '基金交易记录',
                     link: '/admin/investment/subscribe-fund'
                 },
                 {

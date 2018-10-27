@@ -116,6 +116,9 @@ const columns = [
         })
       }
     } 
+  },{
+      title: ' 基金单位净值',
+      dataIndex: 'netAssetValue',
   },
   { title: '份额', dataIndex: 'share', key: 'share', fixed:'right', width:150,
     sorter: (a, b) => a.share - b.share
@@ -145,8 +148,10 @@ export default {
                     let status = result.status;
                     if (status == 200) {
                     	this.loading = false;
-                        this.data = result.data;
-                        
+                      for(let i = 0; i < result.data.length; i++) {
+                        result.data[i].netAssetValue = result.data[i].netAssetValue.toFixed(4);
+                      }
+                      this.data = result.data;  
                     } else {
                         this.$notification.open({
                             message: "错误",

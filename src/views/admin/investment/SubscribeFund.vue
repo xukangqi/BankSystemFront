@@ -279,7 +279,32 @@ export default {
     },
   	showDrawer(value) {
       this.visible = true;
-      this.detailValue = this.showDetail(value);
+      this.$axios({
+                    method: "get",
+                    url: "/investment/fundlogdetail"
+                })
+                .then(res => {
+                    let result = res.data;
+                    let status = result.status;
+                    let fundLogDetail = result.data.fundLogDetail;
+                    if (status == 200) {
+                      fundLogDetail.type = (fundLogDetail.type==0?"认购/申购":"赎回");
+                      fundLogDetail.txDate = this.formatDate(fundLogDetail.txDate);
+                      this.detailValue = fundLogDetail;   
+                    } else {
+                        this.$notification.open({
+                            message: "错误",
+                            description: result.msg
+                        });
+                    }
+                })
+                .catch(err => {
+                    console.log("通信失败，请稍后再试");
+                    this.$notification.open({
+                        message: "错误",
+                        description: "服务器开小差了,请稍后再试"
+                    });
+                });
     },
     onClose() {
       this.visible = false

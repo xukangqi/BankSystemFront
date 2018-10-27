@@ -81,7 +81,7 @@ export const bank = [{
         return result;
     }
 }, {
-    path: '/clearing/draftrecord',
+    path: '/clearing/transferlog',
     type: 'get',
     data(option) {
         let req = JSON.parse(option.body);
@@ -93,7 +93,7 @@ export const bank = [{
        for(let i=0;i<1000;i++){
            let record={
             transferId:Random.integer(0, 10000000),
-            transferoutAccount:Random.integer(0, 10000000000),
+            transferOutAccount:Random.integer(0, 10000000000),
             transferInAccount:Random.integer(0, 10000000000),
             amount:Random.integer(0, 100000000),
             transferDate:1539911101000,
@@ -103,7 +103,29 @@ export const bank = [{
        }
         return result;
     }
-},{
+}, {
+    path: '/clearing/remitlog',
+    type: 'get',
+    data(option) {
+        let req = JSON.parse(option.body);
+        let result = {
+            status: 200,
+            msg: '',
+            data:[]
+        };
+       for(let i=0;i<1000;i++){
+           let record={
+            remitId:Random.integer(0, 10000000),
+            remitOutAccount:Random.integer(0, 10000000000),
+            remitInAccount:Random.integer(0, 10000000000),
+            amount:Random.integer(0, 100000000),
+            remitGenerateDate:1539911101000
+           }; 
+           result.data.push(record);
+       }
+        return result;
+    }
+}, {
     path: '/investment/fundproduct',
     type: 'get',
     data(option) {
@@ -120,13 +142,36 @@ export const bank = [{
             purchaseRate:Random.float(10, 100, 1, 2),
             netAssetValue:Random.float(1, 5, 1, 4),
             redemptionRate:Random.float(10, 100, 1, 2),
-            recordDate:1539911101000
+            purchaseDate:1539911101000
            }; 
            result.data.push(record);
        }
         return result;
     }
-},{
+}, {
+    path: '/investment/funddetail',
+    type: 'get',
+    data(option) {
+        let req = JSON.parse(option.body);
+        let result = {
+            status: 200,
+            msg: '',
+            data:{
+                fundDetail:{}
+            }
+        };
+        let detail={
+            fundId:Random.integer(0, 10000000),
+            type:Random.integer(0, 1),
+            purchaseRate:Random.float(10, 100, 1, 2),
+            netAssetValue:Random.float(1, 5, 1, 4),
+            redemptionRate:Random.float(10, 100, 1, 2),
+            purchaseDate:1539911101000
+        }; 
+        result.data.fundDetail = detail;
+        return result;
+    }
+}, {
     path: '/investment/fundlog',
     type: 'get',
     data(option) {
@@ -152,7 +197,33 @@ export const bank = [{
        }
         return result;
     }
-},{
+}, {
+    path: '/investment/fundlogdetail',
+    type: 'get',
+    data(option) {
+        let req = JSON.parse(option.body);
+        let result = {
+            status: 200,
+            msg: '',
+            data:{
+                fundLogDetail:{}
+            }
+        };
+        let detail={
+            fundTxId:Random.integer(0, 10000000),
+            custId:Random.integer(0, 10000000),
+            account: Random.integer(0, 10000000),
+            fundId: Random.integer(0, 10000000),
+            type:Random.integer(0, 1),
+            amount: Random.integer(0, 10000000),
+            share:Random.integer(1, 1000),
+            txDate:1539911101000,
+            reviewId:Random.integer(0, 10000000)
+        }; 
+        result.data.fundLogDetail = detail;
+        return result;
+    }
+}, {
     path: '/investment/fundhold',
     type: 'get',
     data(option) {
@@ -167,6 +238,7 @@ export const bank = [{
             custId:Random.integer(0, 10000000),
             account: Random.integer(0, 10000000),
             fundId: Random.integer(0, 10000000),
+            netAssetValue: Random.float(1, 5, 1, 4),
             share:Random.integer(1, 1000)
            }; 
            result.data.push(record);
