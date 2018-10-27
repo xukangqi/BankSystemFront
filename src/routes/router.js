@@ -125,6 +125,43 @@ const router = new Router({
                     component: () => import('../views/admin/loan/loanApply.vue')
                 }
             ]
+        },{
+            path: '/admin/clearing',
+            component: Admin,
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: 'draft',
+                    name: 'draft',
+                    component: () => import('../views/admin/clearing/draft.vue')
+                },
+                {
+                    path: 'transfer',
+                    name: 'transfer',
+                    component: () => import('../views/admin/clearing/transfer.vue')
+                }
+            ]
+        },{
+            path: '/admin/investment',
+            component: Admin,
+            meta: {requiresAuth: true},
+            children: [
+                {
+                    path: 'query-fund',
+                    name: 'query-fund',
+                    component: () => import('../views/admin/investment/QueryFund.vue')
+                },
+                {
+                    path: 'subscribe-fund',
+                    name: 'subscribe-fund',
+                    component: () => import('../views/admin/investment/SubscribeFund.vue')
+                },
+                {
+                    path: 'hold-fund',
+                    name: 'hold-fund',
+                    component: () => import('../views/admin/investment/HoldFund.vue')
+                }
+            ]
         }
     ]
 })

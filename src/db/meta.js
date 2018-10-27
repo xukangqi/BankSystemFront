@@ -79,6 +79,44 @@ export default {
                     link: '/admin/loan/manage'
                 }           
             ]
+        },{
+            id: 5,
+            icon: 'hourglass',
+            name: '清算业务',
+            menuItems: [
+                {
+                    id: 51,
+                    name: '汇票业务',
+                    link: '/admin/clearing/draft'
+                },
+                {
+                    id: 52,
+                    name: '转账业务',
+                    link: '/admin/clearing/transfer'
+                }              
+            ]
         },
+        {
+            id: 6,
+            icon: 'pay-circle-o',
+            name: '投资业务',
+            menuItems: [
+                {
+                    id: 61,
+                    name: '基金查询与认购',
+                    link: '/admin/investment/query-fund'
+                },
+                {
+                    id: 62,
+                    name: '基金交易记录',
+                    link: '/admin/investment/subscribe-fund'
+                },
+                {
+                    id: 63,
+                    name: '基金持有',
+                    link: '/admin/investment/hold-fund'
+                },           
+            ]
+        }
     ],
 }
