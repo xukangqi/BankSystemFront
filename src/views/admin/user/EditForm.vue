@@ -8,17 +8,17 @@
             <a-col :span="8"/>
         </row>
        <a-form @submit="handleSubmit" :autoFormCreate="(form)=>{this.form = form}">
-            <a-form-item label="用户ID"  :labelCol="{ span: 7 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="userid">
+            <a-form-item label="用户ID"  :labelCol="{ span: 7 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="userId">
                 <a-input :disabled=true>
                    <a-icon slot="prefix" type='user' style="color:rgba(0,0,0,.25)"/>
                 </a-input>
             </a-form-item>
-            <a-form-item label="用户名" :labelCol="{ span: 7 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="username">
+            <a-form-item label="用户名" :labelCol="{ span: 7 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="userName">
                 <a-input :disabled=true>
                   <a-icon slot="prefix" type='idcard' style="color:rgba(0,0,0,.25)"/>
                 </a-input>
             </a-form-item>
-            <a-form-item label="用户类型" :labelCol="{ span: 7 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="usertype">
+            <a-form-item label="用户类型" :labelCol="{ span: 7 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="userType">
                 <a-input :disabled=true>
                   <a-icon slot="prefix" type='tag-o' style="color:rgba(0,0,0,.25)"/>
                 </a-input>

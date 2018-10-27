@@ -366,7 +366,7 @@ export const bank = [{
         let data = {
             userId: '1',
             userName: '张三',
-            userType: 'VIP',
+            userType: '银行员工',
             phone: '1234567890',
             address: '12400 Imperial Hwy, Norwalk, CA 90650',
             email: "zhangsuan@qq.com"
