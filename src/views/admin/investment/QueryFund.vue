@@ -177,6 +177,7 @@
 export default {
 	mounted() {
 		this.loading = true;
+    this.reviewerId=this.$store.getters.user.userId;
 		this.$axios({
                     method: "get",
                     url: "/investment/fundproduct"
@@ -218,6 +219,7 @@ export default {
       searchText: '',
       detailValue: {},
       pwd: undefined,
+      reviewerId: '',
       columns: [
       	{
         title: '基金代码',
@@ -328,7 +330,39 @@ export default {
                 if (!err) {
                   values.fundId = this.detailValue.fundId;
                   values.type = this.detailValue.type;
-                  console.log("Received values of form: ", values);
+                  console.log("Received values of form: ", values);this.$axios({
+                    method: 'post',
+                    url: '/investment/fundpurchaseform',
+                    params: {
+                      fundId: values.fundId,
+                      name: values.name,
+                      phone: values.phone,
+                      account: values.account,
+                      type: values.type,
+                      amount: values.amount,
+                      password: values.password,
+                      reviewerId: this.reviewerId
+                    }
+                  }).then(res => {
+                    let result = res.data;
+                    if (result.status == 200) {
+                      this.$notification.open({
+                        message: "基金购买申请成功！",
+                        description: "提交申请成功！"
+                      });
+                    } else {
+                      this.$notification.open({
+                        message: "基金购买申请失败！",
+                        description: result.msg
+                      });
+                    }
+                  }).catch(err => {
+                    console.log(err);
+                    this.$notification.open({
+                      message: "错误",
+                      description: "服务器开小差了,请稍后再试"
+                    });
+                  })
                 }
               });
     },
@@ -355,7 +389,7 @@ export default {
             callback('密码不一致');
           }
         }
-  },
+    }
 }
 }
 </script>

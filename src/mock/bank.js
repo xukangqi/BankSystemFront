@@ -385,7 +385,67 @@ export const bank = [{
         };
         return result;
     }
-},{
+}, {
+    path: RegExp('/user/changepassword' + ".*"),
+    type: 'post',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: {}
+        };
+
+        return result;
+    }
+}, {
+    path: RegExp('/user/changeinfo' + ".*"),
+    type: 'post',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: {}
+        };
+
+        return result;
+    }
+}, {
+    path: RegExp('/clearing/remitapplyform' + ".*"),
+    type: 'post',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: {}
+        };
+
+        return result;
+    }
+}, {
+    path: RegExp('/clearing/transferapplyform' + ".*"),
+    type: 'post',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: {}
+        };
+
+        return result;
+    }
+}, {
+    path: RegExp('/investment/fundpurchaseform' + ".*"),
+    type: 'post',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: {}
+        };
+
+        return result;
+    }
+}, {
     path: '/clearing/transferlog',
     type: 'get',
     data(option) {

@@ -8,11 +8,11 @@
 	      :fieldDecoratorOptions="{rules: [{required: true, message: '请输入用户手机号' },{validator: this.checkTelephone}]}">
 	     <a-input />
 	 	</a-form-item>
-	 	<a-form-item label='付款账户号' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="remit_out_account"
+	 	<a-form-item label='付款账户号' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="transferOutAccount"
 	      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入付款账户号' }]}">
 	     <a-input />
 	 	</a-form-item>
-	 	<a-form-item label='收款账户号' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="remit_in_account"
+	 	<a-form-item label='收款账户号' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="transferInAccount"
 	      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入收款账户号' }]}">
 	     <a-input />
 	 	</a-form-item>
@@ -59,6 +59,37 @@
 		        this.form.validateFields((err, values) => {
 		          if (!err) {
 		            console.log("Received values of form: ", values);
+		            this.$axios({
+	                    method: 'post',
+	                    url: '/clearing/transferapplyform',
+	                    params: {
+	                    	name: values.name,
+	                    	phone: values.phone,
+	                    	transferOutAccount: values.transferOutAccount,
+	                    	transferInAccount: values.transferInAccount,
+	                    	amount: values.amount,
+	                    	password: values.password
+	                    }
+	                  }).then(res => {
+	                    let result = res.data;
+	                    if (result.status == 200) {
+	                      this.$notification.open({
+	                        message: "转账申请成功！",
+	                        description: "提交申请成功！"
+	                      });
+	                    } else {
+	                      this.$notification.open({
+	                        message: "转账申请失败！",
+	                        description: result.msg
+	                      });
+	                    }
+	                  }).catch(err => {
+	                    console.log(err);
+	                    this.$notification.open({
+	                      message: "错误",
+	                      description: "服务器开小差了,请稍后再试"
+	                    });
+	                  })
 		          }
 		        });
 		     },

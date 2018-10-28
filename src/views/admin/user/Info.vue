@@ -141,7 +141,8 @@
         data() {
             return {
               visible: false,
-              newpwd: undefined
+              newpwd: undefined,
+              userInfo: {}
             }
         }, 
         methods: {
@@ -149,7 +150,7 @@
               this.showDrawer()
             }, 
             clickEdit() {
-              window.location.href="/admin/user/edit-form"
+              this.$router.push("/admin/user/edit-form");
             },
             showDrawer() {
               this.visible = true
@@ -161,7 +162,37 @@
               e.preventDefault();
               this.form.validateFields((err, values) => {
                 if (!err) {
-                  console.log("Received values of form: ", values);
+                  this.$axios({
+                    method: 'post',
+                    url: '/user/changepassword',
+                    params: {
+                      userName: this.userInfo.userName,
+                      oldpassword: values.oldpwd,
+                      newpassword: values.newpwd
+                    }
+                  }).then(res => {
+                    let result = res.data;
+                    if (result.status == 200) {
+                      this.$notification.open({
+                        message: "密码修改成功！",
+                        description: "请重新登录"
+                      });    
+                      setTimeout(() => {
+                        this.$router.push('/login');
+                      }, 1000);
+                    } else {
+                      this.$notification.open({
+                        message: "密码修改失败！",
+                        description: result.msg
+                      });
+                    }
+                  }).catch(err => {
+                    console.log(err);
+                    this.$notification.open({
+                      message: "错误",
+                      description: "服务器开小差了,请稍后再试"
+                    });
+                  })
                 }
               });
            },
@@ -179,6 +210,7 @@
         },
         mounted() {
             this.form.setFieldsValue(this.$store.getters.user);
+            this.userInfo = this.$store.getters.user;
         }
     }
 </script>

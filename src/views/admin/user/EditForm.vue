@@ -61,7 +61,37 @@
               e.preventDefault()
               this.form.validateFields((err, values) => {
                 if (!err) {
-                  console.log('Received values of form: ', values)
+                  this.$axios({
+                    method: 'post',
+                    url: '/user/changeinfo',
+                    params: {
+                      userId: values.userId,
+                      userName: values.userName,
+                      userType: values.userType,
+                      phone: values.phone,
+                      email: values.email,
+                      address: values.address
+                    }
+                  }).then(res => {
+                    let result = res.data;
+                    if (result.status == 200) {
+                      this.$notification.open({
+                        message: "用户基本信息修改成功！",
+                        description: ""
+                      });
+                    } else {
+                      this.$notification.open({
+                        message: "用户基本信息修改失败！",
+                        description: result.msg
+                      });
+                    }
+                  }).catch(err => {
+                    console.log(err);
+                    this.$notification.open({
+                      message: "错误",
+                      description: "服务器开小差了,请稍后再试"
+                    });
+                  })
                 }
               })
             },
