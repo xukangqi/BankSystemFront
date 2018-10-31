@@ -300,6 +300,7 @@
                         method: "get",
                         // url: "/customer/" + this.custId
                         url: "/customer/123"
+
                     })
                     .then(res => {
                         let result = res.data;
