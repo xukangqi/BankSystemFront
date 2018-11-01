@@ -39,12 +39,17 @@
                         <p>贷款类型:{{this.detailValue.loadTypeName}}</p>
                         <p>审核人信息:{{this.detailValue.reviewId}}</p>
                     </a-collapse-panel>
-                    <a-collapse-panel header="还款记录" key="2" :disabled='false'>
+                     <a-collapse-panel header="分期详情" key="2" :disabled='false'>
                         <a-table :columns="paymentColumns" :dataSource="loanPayment">
                             <!-- <a slot="action" slot-scope="text" href="javascript:;">action</a> -->
                         </a-table>
                     </a-collapse-panel>
-                    <a-collapse-panel header="还款申请" key="3" :disabled='false'>
+                    <a-collapse-panel header="还款记录" key="3" :disabled='false'>
+                        <a-table :columns="paylogColumns" :dataSource="loanPaylog">
+                            <!-- <a slot="action" slot-scope="text" href="javascript:;">action</a> -->
+                        </a-table>
+                    </a-collapse-panel>
+                    <a-collapse-panel header="还款申请" key="4" :disabled='false'>
                         <a-form @submit="handleSubmit" :autoFormCreate="(form)=>{this.form = form}" style="margin-top:20px">
                             <a-form-item label='申请人' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }"
                                 fieldDecoratorId="name" :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入姓名' }]}">
@@ -88,6 +93,7 @@
                             </a-form-item>
                         </a-form>
                     </a-collapse-panel>
+                    
                 </a-collapse>
             </div>
             <div :style="{
@@ -122,6 +128,7 @@
                 password:undefined,
                 DrawTransId:0,
                 detailValue: {},
+                loanPaylog: [],
                 loanPayment: [],
                 visible: false,
                 clickrow: 0,
@@ -206,22 +213,48 @@
                         width: 70
                     }
                 ],
-                paymentColumns: [{
-                    title: "还贷交易流水号",
-                    dataIndex: "paymentId",
-                    key: "paymentId"
+                paylogColumns: [{
+                    title: "还款交易流水号",
+                    dataIndex: "paylogId",
+                    key: "paylogId"
                 }, {
-                    title: "还贷批次",
+                    title: "还款账户",
+                    dataIndex: "account",
+                    key: "account"
+                }, {
+                    title: "本次还款金额",
+                    dataIndex: "payAmount",
+                    key: "payAmount"
+                }, {
+                    title: "还款时间",
+                    dataIndex: "payDate",
+                    key: "payDate"
+                }],
+                 paymentColumns: [ {
+                    title: "分期期数",
                     dataIndex: "insNum",
                     key: "insNum"
-                }, {
-                    title: "本次还贷金额",
+                },{
+                    title: "分期金额",
                     dataIndex: "paymentAmount",
                     key: "paymentAmount"
-                }, {
-                    title: "还贷时间",
+                },{
+                title: "违约金",
+                    dataIndex: "reimbursement",
+                    key: "reimbursement"
+                },{
+                    title: "需还总金额",
+                    dataIndex: "allPaymentAmount",
+                    key: "allPaymentAmount"
+                },{
+                    title: "到期时间",
                     dataIndex: "paymentDate",
                     key: "paymentDate"
+                },{
+                    title: "当前状态",
+                    dataIndex: "isFinished",
+                    key: "isFinished"
+
                 }]
             };
         },
@@ -235,13 +268,22 @@
                 clearFilters();
                 this.searchText = "";
             },
+            formatPaymentStatus(value){
+                let result='';
+                if(value==true){
+                   result='已还清';
+                }else{
+                   result='未还清';
+                }
+                 return result;
+            },
             showDrawer(value) {
                 this.DrawTransId=value;
                 this.visible = true;
                 this.$axios({
                         method: "get",
-                        url: "/loan/"+ this.DrawTransId
-                        // url: '/loan'
+                        // url: "/loan/"+ this.DrawTransId
+                        url: '/loan'
                     })
                     .then(res => {
                         let result = res.data;
@@ -265,15 +307,44 @@
 
                 this.$axios({
                         method: "get",
-                        url: "/loan/payment"+ this.DrawTransId
+                        url: "/loan/paylog/"+ this.DrawTransId
                     })
                     .then(res => {
                         let result = res.data;
                         let status = result.status;
                         if (status == 200) {
-                            let array = result.data.bankPayment;
+                            let array = result.data;
+                            for (let i = 0; i < array.length; i++) {
+                                array[i].payDate = this.formatDate(array[i].payDate);
+                            }
+                            this.loanPaylog = array;
+                        } else {
+                            this.$notification.open({
+                                message: "错误",
+                                description: result.msg
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        console.log("通信失败，请稍后再试");
+                        this.$notification.open({
+                            message: "错误",
+                            description: "服务器开小差了,请稍后再试"
+                        });
+                    });
+
+                     this.$axios({
+                        method: "get",
+                        url: "/loan/payment/"+ this.DrawTransId
+                    })
+                    .then(res => {
+                        let result = res.data;
+                        let status = result.status;
+                        if (status == 200) {
+                            let array = result.data;
                             for (let i = 0; i < array.length; i++) {
                                 array[i].paymentDate = this.formatDate(array[i].paymentDate);
+                                array[i].isFinished=this.formatPaymentStatus(array[i].isFinished);
                             }
                             this.loanPayment = array;
                         } else {
@@ -385,6 +456,9 @@
                                 });
                                 // this.$router.push('/admin/loan/manage');
                                 this.form.resetFields();
+                                setTimeout(()=>{
+                                this.visible=false;
+                                },1000);
                             } else {
                                 this.$notification.open({
                                     message: "提交申请失败",

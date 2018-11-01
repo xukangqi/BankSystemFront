@@ -29,6 +29,7 @@ export const bank = [{
     }
 }, {
     path: '/loan',
+    // path: RegExp('/loan' + ".*"),
     type: 'get',
     data(option) {
         let req = JSON.parse(option.body);
@@ -57,29 +58,53 @@ export const bank = [{
         return result;
     }
 }, {
-    path: '/loan/payment',
+    // path: '/loan/payment',
+    path: RegExp('/loan/paylog/' + ".*"),
     type: 'get',
     data(option) {
         let req = JSON.parse(option.body);
         let result = {
             status: 200,
             msg: '',
-            data: {
-                bankPayment: []
-            }
+            data:[]
         };
         for (let i = 0; i < 10; i++) {
             let payment = {
-                paymentId: Random.integer(1, 1000),
-                insNum: i + 1,
-                paymentAmount: Random.integer(1, 1000),
-                paymentDate: 1539911101000
+                paylogId: Random.integer(1, 1000),
+                payAmount: Random.integer(1, 1000),
+                payDate: 1539911101000,
+                account:Random.integer(1, 1000)
             };
-            result.data.bankPayment.push(payment);
+            result.data.push(payment);
         }
         return result;
     }
 }, {
+    // path: '/loan/payment',
+    path: RegExp('/loan/payment/' + ".*"),
+    type: 'get',
+    data(option) {
+        let req = JSON.parse(option.body);
+        let result = {
+            status: 200,
+            msg: '',
+            data:[]
+        };
+        for (let i = 0; i < 12; i++) {
+            let payment = {
+                paymentId: Random.integer(1, 1000),
+                paymentAmount: Random.integer(1, 1000),
+                paymentDate: 1539911101000,
+                insNum:i+1,
+                isFinished:Random.boolean(),
+                reimbursement: Random.integer(1, 1000),
+                allPaymentAmount:Random.integer(1, 1000)
+            };
+            result.data.push(payment);
+        }
+        return result;
+    }
+},{
     path: '/loan/interestRate/1',
     type: 'get',
     data(option) {
