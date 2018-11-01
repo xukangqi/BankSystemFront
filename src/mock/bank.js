@@ -484,7 +484,8 @@ export const bank = [{
             remitOutAccount:Random.integer(0, 10000000000),
             remitInAccount:Random.integer(0, 10000000000),
             amount:Random.integer(0, 100000000),
-            remitGenerateDate:1539911101000
+            remitGenerateDate:1539911101000,
+            remitArriveDate:1539911101000
            }; 
            result.data.push(record);
        }

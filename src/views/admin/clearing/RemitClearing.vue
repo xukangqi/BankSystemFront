@@ -54,6 +54,7 @@ export default {
                     	this.loading = false;
                       for(let i=0; i<result.data.length; i++) {
                         result.data[i].remitGenerateDate = this.formatDate(result.data[i].remitGenerateDate);
+                        result.data[i].remitArriveDate = this.formatDate(result.data[i].remitArriveDate);
                       }
                         this.data = result.data;
                       
@@ -123,7 +124,10 @@ export default {
 		}, {
 		  title: '汇票生成时间',
 		  dataIndex: 'remitGenerateDate',
-		}],    
+		}, {
+      title: '汇款到达时间',
+      dataIndex: 'remitArriveDate',
+    }],    
 	}
   },
   methods: {
