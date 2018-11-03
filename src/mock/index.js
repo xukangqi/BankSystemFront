@@ -5,8 +5,8 @@ import {user} from './user.js';
 
 //mock数据，测试时默认开启时
 let data=[].concat(
-    // bank,
-    // user
+     // bank,
+     // user
 );
 
 data.forEach((res)=>{

@@ -447,6 +447,18 @@ export const bank = [{
         return result;
     }
 }, {
+    path: RegExp('/clearing/remitdrawingform' + ".*"),
+    type: 'post',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: {}
+        };
+
+        return result;
+    }
+}, {
     path: RegExp('/clearing/transferapplyform' + ".*"),
     type: 'post',
     data(option) {
