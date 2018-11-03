@@ -61,7 +61,7 @@
 		            console.log("Received values of form: ", values);
 		            this.$axios({
 	                    method: 'post',
-	                    url: '/clearing/transferapplyform',
+	                    url: '/user/transfer/create',
 	                    params: {
 	                    	name: values.name,
 	                    	phone: values.phone,

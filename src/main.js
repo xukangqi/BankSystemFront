@@ -3,8 +3,8 @@ import Antd from 'ant-design-vue';
 import App from './App.vue';
 import iView from 'iview';
 import router from './routes/router';
-import axios from './axio_config.js';
-// import axios from 'axios';
+// import axios from './axio_config.js';
+import axios from 'axios';
 import './mock';
 import store from './vuex';
 

@@ -180,7 +180,7 @@ export default {
     this.reviewerId=this.$store.getters.user.userId;
 		this.$axios({
                     method: "get",
-                    url: "/investment/fundproduct"
+                    url: "/user/fund/query/product"
                 })
                 .then(res => {
                     let result = res.data;
@@ -220,6 +220,7 @@ export default {
       detailValue: {},
       pwd: undefined,
       reviewerId: '',
+      drawFundId: '',
       columns: [
       	{
         title: '基金代码',
@@ -287,9 +288,10 @@ export default {
     },
     showDrawer(value) {
       this.visible = true;
+      this.drawFundId = value;
       this.$axios({
                     method: "get",
-                    url: "/investment/funddetail"
+                    url: "/investment/funddetail/" + this.drawFundId
                 })
                 .then(res => {
                     let result = res.data;
@@ -332,7 +334,7 @@ export default {
                   values.type = this.detailValue.type;
                   console.log("Received values of form: ", values);this.$axios({
                     method: 'post',
-                    url: '/investment/fundpurchaseform',
+                    url: '/user/fund/create/tx/purchase',
                     params: {
                       fundId: values.fundId,
                       name: values.name,

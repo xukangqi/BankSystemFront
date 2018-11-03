@@ -61,7 +61,7 @@
 		          	console.log("Received values of form: ", values);
 		          	this.$axios({
 	                    method: 'post',
-	                    url: '/clearing/remitapplyform',
+	                    url: '/user/remit/create',
 	                    params: {
 	                    	name: values.name,
 	                    	phone: values.phone,

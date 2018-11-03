@@ -45,7 +45,7 @@ export default {
 		this.loading = true;
 		this.$axios({
                     method: "get",
-                    url: "/clearing/remitlog"
+                    url: "/user/remit/query"
                 })
                 .then(res => {
                     let result = res.data;

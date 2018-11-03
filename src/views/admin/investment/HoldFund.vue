@@ -141,7 +141,7 @@ export default {
 		this.loading = true;
 		this.$axios({
                     method: "get",
-                    url: "/investment/fundhold"
+                    url: "/user/fund/query/hold"
                 })
                 .then(res => {
                     let result = res.data;
