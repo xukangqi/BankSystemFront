@@ -103,15 +103,15 @@
                                 phone: values.phone,
                                 depositBank: addr,
                                 accountKind:values.accountKind,
-                                accountType:values.accountType
+                                accountType:values.accountType,
+                                password:values.password
                             }
                         }).then(res => {
                             let result = res.data;
                             if (result.status == 200) {
-                                custId=result.data;
                                 this.$notification.open({
                                     message: "新增账户成功",
-                                    description: '账户号为'+account
+                                    description:  "新增账户成功"
                                 });
                                 this.$router.push('/admin/customer/info');
                             } else {
@@ -122,6 +122,7 @@
                             }
 
                         }).catch(err => {
+                            console.log(err);
                             this.$notification.open({
                                 message: "错误",
                                 description: "服务器开小差了,请稍后再试"

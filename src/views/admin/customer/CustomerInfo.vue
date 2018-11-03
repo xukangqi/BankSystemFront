@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a-table :dataSource="data" :columns="columns" :scroll="{ x: 1000}">
+        <a-table :dataSource="data" :columns="columns" :scroll="{ x: 1500}">
             <div slot="filterDropdown" slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters }" class='custom-filter-dropdown'>
                 <a-input ref="searchInput" placeholder='查找用户' :value="selectedKeys[0]" @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
                     @pressEnter="() => handleSearch(selectedKeys, confirm)" />
@@ -168,14 +168,14 @@
                         title: "客户ID",
                         dataIndex: "custId",
                         key: "custId",
-                        width: 100,
+                        width: 190,
                         fixed: 'left'
                     },
                     {
                         title: "用户姓名",
                         dataIndex: "custName",
                         key: "custName",
-                        width: 80,
+                        width: 90,
                         scopedSlots: {
                             filterDropdown: "filterDropdown",
                             filterIcon: "filterIcon",
@@ -195,13 +195,13 @@
                         title: "身份证",
                         dataIndex: "identityCard",
                         key: "identityCard",
-                        width: 150
+                        width: 120
                     },
                     {
                         title: "手机号",
                         dataIndex: "phone",
                         key: "phone",
-                        width: 100,
+                        width: 110,
                         scopedSlots: {
                             filterDropdown: "filterDropdown1",
                             filterIcon: "filterIcon1",
@@ -221,13 +221,13 @@
                         title: "客户信用",
                         dataIndex: "credit",
                         key: "credit",
-                        width: 70
+                        width: 80
                     },
                     {
                         title: "客户类型",
                         dataIndex: "custType",
                         key: "custType",
-                        width: 80,
+                        width: 100,
                         filters: [{
                                 text: "个人用户",
                                 value: "个人用户"
@@ -295,18 +295,17 @@
             },
             showDrawer(value) {
                 this.custId = value;
-                // console.log('custId  ' + this.custId);
+                console.log('custId  ' + this.custId);
                 this.$axios({
                         method: "get",
-                        // url: "/customer/" + this.custId
-                        url: "/customer/123"
-
+                        url: "/customer/" + this.custId
+                        // url: "/customer/123"
                     })
                     .then(res => {
                         let result = res.data;
                         let status = result.status;
                         if (status == 200) {
-                            this.detailValue = result.data.BankCustomer;
+                            this.detailValue = result.data;
                             // this.formData=this.detailValue;
                             // console.log(this.formData);
                         } else {
@@ -593,6 +592,7 @@
                 .then(res => {
                     let result = res.data;
                     let status = result.status;
+                    console.log(result);
                     if (status == 200) {
                         for (let i = 0; i < result.data.length; i++) {
                             result.data[i].custType = this.formatCustType(result.data[i].custType);

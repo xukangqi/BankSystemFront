@@ -27,5 +27,25 @@ export const user = [{
 		}
 		return result;
 	}
+},{
+    path: RegExp('/user/login' + ".*"),
+    type: 'post',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: {}
+        };
+        let data = {
+            userId: '1',
+            userName: '张三',
+            userType: '银行员工',
+            phone: '1234567890',
+            address: '12400 Imperial Hwy, Norwalk, CA 90650',
+            email: "zhangsuan@qq.com"
+        }
+        result.data=data;
+        return result;
+    }
 }
 ];

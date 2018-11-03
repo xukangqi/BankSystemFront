@@ -88,7 +88,7 @@
               if (result.status == 200) {
                 this.$notification.open({
                   message: "注册成功",
-                  description: '你的用户id为'+result.data
+                  description: '注册成功'
                 });    
                 setTimeout(() => {
                   this.$router.push('/login');

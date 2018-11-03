@@ -3,6 +3,7 @@ import axios from 'axios';
 // axios.defaults.baseURL = 'http://139.198.15.172:8080';
 axios.defaults.baseURL = 'http://localhost:8080';
 axios.defaults.headers = {
+
   // 'Content-Type': 'application/json;charset=utf-8',
   'Content-Type' : 'application/x-www-form-urlencoded;charset=UTF-8',
   'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS',

@@ -44,7 +44,7 @@ n<template>
             return {
                 password: undefined,
                 formLayout: "horizontal",
-                reviewerId:undefined
+                reviewerId: undefined
             };
         },
         methods: {
@@ -55,14 +55,14 @@ n<template>
                         this.radio = parseFloat(this.radio);
                         this.$axios({
                             method: 'post',
-                            url: '/money/withdraw',
+                            url: '/withdraw/insert',
                             params: {
                                 custName: values.name,
                                 phone: values.phone,
                                 account: values.account,
-                                withdrawMoney: values.type,
+                                withdrawMoney: values.amount,
                                 password: values.password,
-                                reviewerId:this.reviewerId
+                                reviewerId: this.reviewerId
                             }
                         }).then(res => {
                             let result = res.data;
@@ -78,7 +78,6 @@ n<template>
                                     description: result.msg
                                 });
                             }
-
                         }).catch(err => {
                             this.$notification.open({
                                 message: "错误",
@@ -86,10 +85,8 @@ n<template>
                             });
                         })
                     }
-
                 });
             },
-
             handleIdChange(value) {
                 console.log(value);
             },
@@ -116,8 +113,7 @@ n<template>
             }
         },
         mounted() {
-      this.reviewerId=this.$store.getters.user.userId;
-            
+            this.reviewerId = this.$store.getters.user.userId;
         }
     };
 </script>

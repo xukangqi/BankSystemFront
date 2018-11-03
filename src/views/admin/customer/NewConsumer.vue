@@ -114,8 +114,9 @@
                             }
                         }).then(res => {
                             let result = res.data;
+                            console.log(result);
                             if (result.status == 200) {
-                                custId=result.data;
+                                let custId=result.data;
                                 this.$notification.open({
                                     message: "开户成功",
                                     description: '用户ID为'+custId

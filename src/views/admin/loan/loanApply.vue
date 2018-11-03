@@ -29,7 +29,7 @@
     </a-form-item>
     <a-form-item label='贷款期限' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="time"
       :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入贷款期限' }]}">
-      <a-input />
+      <a-input addonAfter="月"/>
     </a-form-item>
     <a-form-item label='贷款类型' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="loanType"
       :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入贷款类型' }]}">
@@ -37,7 +37,6 @@
         <a-select-option value='1'>住房贷款</a-select-option>
         <a-select-option value='2'>小微贷款</a-select-option>
         <a-select-option value='3'>消费贷款</a-select-option>
-        <a-select-option value='4'>信用贷款</a-select-option>
       </a-select>
     </a-form-item>
 
@@ -47,6 +46,7 @@
           <p>一年期以上:{{interestRate.one}}%</p>
           <p>三年期以上:{{interestRate.three}}%</p>
           <p>五年期以上:{{interestRate.five}}%</p>
+          <p>违约利率:{{interestRate.fineRate}}%</p>
         </template>
         <a-input addonAfter="%" v-model="radio" />
       </a-popover>
@@ -78,10 +78,11 @@
           // updateTime:'',
           one: 0,
           three: 0,
-          five: 0
+          five: 0,
+          fineRate: 0
         },
         radio: undefined,
-        reviewerId:undefined
+        reviewerId: undefined
       };
     },
     methods: {
@@ -95,6 +96,7 @@
                 description: '请输入利率信息',
               });
             } else {
+              console.log('开始提交');
               this.radio = parseFloat(this.radio);
               this.$axios({
                 method: 'post',
@@ -109,10 +111,11 @@
                   interestRate: this.radio,
                   password: values.password,
                   loanType: values.loanType,
-                  reviewerId:this.reviewerId
+                  reviewerId: this.reviewerId
                 }
               }).then(res => {
                 let result = res.data;
+                console.log(result);
                 if (result.status == 200) {
                   this.$notification.open({
                     message: "申请成功",
@@ -197,9 +200,10 @@
           let result = res.data;
           let status = result.status;
           if (status == 200) {
-            this.interestRate.one = result.data.bankLoadType.periodOne;
-            this.interestRate.three = result.data.bankLoadType.periodTwo;
-            this.interestRate.five = result.data.bankLoadType.periodThree;
+            this.interestRate.one = result.data.periodOne;
+            this.interestRate.three = result.data.periodTwo;
+            this.interestRate.five = result.data.periodThree;
+            this.interestRate.fineRate = result.data.fineRate;
           } else {
             this.$notification.open({
               message: '错误',
@@ -216,7 +220,7 @@
       }
     },
     mounted() {
-      this.reviewerId=this.$store.getters.user.userId;
+      this.reviewerId = this.$store.getters.user.userId;
       this.$axios({
         method: 'get',
         url: '/loan/interestRate/1',
@@ -224,9 +228,10 @@
         let result = res.data;
         let status = result.status;
         if (status == 200) {
-          this.interestRate.one = result.data.bankLoadType.periodOne;
-          this.interestRate.three = result.data.bankLoadType.periodTwo;
-          this.interestRate.five = result.data.bankLoadType.periodThree;
+          this.interestRate.one = result.data.periodOne;
+          this.interestRate.three = result.data.periodTwo;
+          this.interestRate.five = result.data.periodThree;
+          this.interestRate.fineRate = result.data.fineRate;
         } else {
           this.$notification.open({
             message: '错误',
@@ -234,7 +239,7 @@
           });
         }
       }).catch(err => {
-        console.log('通信失败，请稍后再试');
+        console.log(err);
         this.$notification.open({
           message: '错误',
           description: '无法获得利率信息',

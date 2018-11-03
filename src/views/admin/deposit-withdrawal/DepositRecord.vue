@@ -28,7 +28,7 @@
                         title: "存款流水号",
                         dataIndex: "depositId",
                         key: "depositId",
-                        width: 120,
+                        width: 190,
                         fixed: 'left'
                     },
                     {
@@ -67,7 +67,7 @@
 
                     }, {
                         title: "审核人id",
-                        width: 80,
+                        width: 90,
                         dataIndex: "reviewerId",
                         key: "reviewerId"
                     }
@@ -81,7 +81,9 @@
                 this.searchText = selectedKeys[0];
             },
             formatDate(value) {
-                let date = new Date(parseInt(value) / 1000);
+                console.log(value);
+                let date = new Date(parseInt(value));
+                console.log(date);
                 return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
             },
             handleReset(clearFilters) {
@@ -95,7 +97,7 @@
                 this.confirmLoading = true;
                 this.$axios({
                         method: 'get',
-                        url: '/money/deposit/' + this.account
+                        url: '/deposit/' + this.account
                     })
                     .then(res => {
                         let result = res.data;

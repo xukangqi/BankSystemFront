@@ -137,14 +137,14 @@
                         title: "交易流水号",
                         dataIndex: "transId",
                         key: "transId",
-                        width: 120,
+                        width: 200,
                         fixed: 'left'
                     },
                     {
-                        title: "Name",
-                        dataIndex: "name",
-                        width: 100,
-                        key: "name",
+                        title: "贷款账号",
+                        dataIndex: "account",
+                        width: 140,
+                        key: "account",
                         scopedSlots: {
                             filterDropdown: "filterDropdown",
                             filterIcon: "filterIcon",
@@ -163,30 +163,30 @@
                     {
                         title: "贷款日期",
                         width: 120,
-                        dataIndex: "loanDate",
-                        key: "loanDate"
+                        dataIndex: "transDate",
+                        key: "transDate"
                     },
                     {
                         title: "贷款金额",
-                        width: 140,
+                        width: 100,
                         dataIndex: "loanAmount",
                         key: "loanAmount"
                     },
                     {
                         title: "贷款总金额",
-                        width: 140,
+                        width: 100,
                         dataIndex: "loanAmountSum",
                         key: "loanAmountSum"
                     },
                     {
                         title: "已收到金额",
-                        width: 140,
+                        width: 80,
                         dataIndex: "recoveredAmount",
                         key: "recoveredAmount"
                     },
                     {
                         title: "贷款状态",
-                        width: 100,
+                        width: 70,
                         dataIndex: "loanStatus",
                         key: "loanStatus",
                         filters: [{
@@ -282,8 +282,8 @@
                 this.visible = true;
                 this.$axios({
                         method: "get",
-                        // url: "/loan/"+ this.DrawTransId
-                        url: '/loan'
+                        url: "/loan/"+ this.DrawTransId
+                        // url: '/loan'
                     })
                     .then(res => {
                         let result = res.data;
@@ -366,7 +366,7 @@
                 this.visible = false;
             },
             formatDate(value) {
-                let date = new Date(parseInt(value) / 1000);
+                let date = new Date(parseInt(value));
                 return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
             },
             formatLoanStatus(value) {
@@ -487,10 +487,9 @@
                     let status = result.status;
                     if (status == 200) {
                         for (let i = 0; i < result.data.length; i++) {
-                            result.data[i].loanDate = this.formatDate(result.data[i].loanDate);
-                            result.data[i].loanStatus = this.formatLoanStatus(parseInt(result.data[i].loanStatus));
-
-                            // result.data[i].operation = '<a-button type="primary">查看详情</a-button>'
+                            result.data[i].transDate = this.formatDate(result.data[i].transDate);
+                            // result.data[i].loanStatus = this.formatLoanStatus(parseInt(result.data[i].loanStatus));
+                            // result.data[i].transId=result.data[i].transId.toString();
                         }
                         this.data = result.data;
                     } else {

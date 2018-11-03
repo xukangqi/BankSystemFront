@@ -55,10 +55,11 @@
               method: 'post',
               url: '/user/login',
               params: {
-                userName: values.name,
+                username: values.name,
                 password: values.password
               }
             }).then(res => {
+              console.log(res);
               let result = res.data;
               if (result.status == 200) {
                 this.$notification.open({
@@ -72,6 +73,7 @@
                   this.$router.push('/admin/user');
                 }, 2000);
               } else {
+
                 this.$notification.open({
                   message: "登录失败",
                   description: result.msg
@@ -105,7 +107,7 @@
               method: 'post',
               url: '/user/changepassword',
               params: {
-                userName: values.name,
+                username: values.name,
                 oldpassword: values.oldpassword,
                 newpassword: values.newpassword
               }

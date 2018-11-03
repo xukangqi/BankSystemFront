@@ -28,7 +28,7 @@
                         title: "取款流水号",
                         dataIndex: "withdrawId",
                         key: "withdrawId",
-                        width: 120,
+                        width: 190,
                         fixed: 'left'
                     },
                     {
@@ -63,11 +63,11 @@
                 this.searchText = selectedKeys[0];
             },
             formatDate(value) {
-                let date = new Date(parseInt(value) / 1000);
+                let date = new Date(parseInt(value) );
                 return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
             },
             formatDateTime(value) {
-                let date = new Date(parseInt(value) / 1000);
+                let date = new Date(parseInt(value));
                 return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
             },
             handleReset(clearFilters) {
@@ -81,7 +81,7 @@
                 this.confirmLoading = true;
                 this.$axios({
                         method: 'get',
-                        url: '/money/withdraw/' + this.account
+                        url: '/withdraw/' + this.account
                     })
                     .then(res => {
                         let result = res.data;

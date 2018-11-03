@@ -93,7 +93,7 @@ n<template>
               this.radio = parseFloat(this.radio);
               this.$axios({
                 method: 'post',
-                url: '/money/deposit',
+                url: '/deposit/insert',
                 params: {
                   account: values.account,
                   depositMoney: values.amount,
@@ -208,7 +208,7 @@ n<template>
     mounted() {
       this.reviewerId=this.$store.getters.user.userId;
       this.$axios({
-        url: '/money/interestrate',
+        url: '/rate/getRate',
         method: 'get'
       }).then(res => {
         let result = res.data;
