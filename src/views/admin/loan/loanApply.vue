@@ -226,6 +226,7 @@
         url: '/loan/interestRate/1',
       }).then(res => {
         let result = res.data;
+        console.log(result);
         let status = result.status;
         if (status == 200) {
           this.interestRate.one = result.data.periodOne;

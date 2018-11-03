@@ -562,9 +562,12 @@
                             if (result.status == 200) {
                                  this.$notification.open({
                                     message: "修改成功",
-                                    description: '修改用户信息成功，即将跳转'
+                                    description: '修改用户信息成功'
                                 });
-                                this.$router.push('/admin/customer/info');
+                                setTimeout(()=>{
+                                this.form.resetFields();
+                                this.visible=false;
+                                },400);
                             } else {
                                 this.$notification.open({
                                     message: "提交请求失败",
