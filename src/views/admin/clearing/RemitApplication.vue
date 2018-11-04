@@ -40,7 +40,8 @@
 	export default {
 		data() {
 			return {
-				password: undefined
+				password: undefined,
+				returnData: ''
 			}
 		},
 		methods: {
@@ -73,9 +74,10 @@
 	                  }).then(res => {
 	                    let result = res.data;
 	                    if (result.status == 200) {
+	                      this.returnData = result.data;
 	                      this.$notification.open({
 	                        message: "汇款申请成功！",
-	                        description: "提交申请成功！"
+	                        description: "汇票流水号为：" + this.returnData
 	                      });
 	                    } else {
 	                      this.$notification.open({

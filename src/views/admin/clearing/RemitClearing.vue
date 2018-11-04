@@ -54,7 +54,11 @@ export default {
                     	this.loading = false;
                       for(let i=0; i<result.data.length; i++) {
                         result.data[i].remitGenerateDate = this.formatDate(result.data[i].remitGenerateDate);
-                        result.data[i].remitArriveDate = this.formatDate(result.data[i].remitArriveDate);
+                        if(result.data[i].remitArriveDate == "Unpaid") {
+                          result.data[i].remitArriveDate = "未提取"
+                        } else {
+                          result.data[i].remitArriveDate = this.formatDate(result.data[i].remitArriveDate);
+                        }
                       }
                         this.data = result.data;
                       

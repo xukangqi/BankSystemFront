@@ -283,7 +283,7 @@ export default {
       this.drawFundTxId = value;
       this.$axios({
                     method: "get",
-                    url: "/investment/fundlogdetail/" + this.drawFundTxId
+                    url: "/query/txdetail/" + this.drawFundTxId
                 })
                 .then(res => {
                     let result = res.data;

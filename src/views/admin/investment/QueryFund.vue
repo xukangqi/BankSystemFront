@@ -15,7 +15,7 @@
     <a-icon slot="filterIcon" slot-scope="filtered" type='search' :style="{ color: filtered ? '#108ee9' : '#aaa' }" />
 
     <template slot="operation" slot-scope="text, record">
-                <a-button type='primary' @click="() => showDrawer(record.fundId)">显示详情</a-button>
+                <a-button type='primary' @click="() => showDrawer(record.fundId, record.purchaseDate)">显示详情</a-button>
             </template>
 
 <template slot="customRender" slot-scope="text">
@@ -180,7 +180,8 @@ export default {
     this.reviewerId=this.$store.getters.user.userId;
 		this.$axios({
                     method: "get",
-                    url: "/user/fund/query/product"
+                    url: "/investment/fundproduct"
+                    // url: "/user/fund/query/product"
                 })
                 .then(res => {
                     let result = res.data;
@@ -221,6 +222,7 @@ export default {
       pwd: undefined,
       reviewerId: '',
       drawFundId: '',
+      drawPurchaseDate: '',
       columns: [
       	{
         title: '基金代码',
@@ -286,12 +288,14 @@ export default {
       clearFilters()
       this.searchText = ''
     },
-    showDrawer(value) {
+    showDrawer(value1, value2) {
       this.visible = true;
-      this.drawFundId = value;
+      this.drawFundId = value1;
+      this.drawPurchaseDate = value2;
       this.$axios({
                     method: "get",
-                    url: "/investment/funddetail/" + this.drawFundId
+                    // url: "/investment/funddetail"
+                    url: "/query/productdetail?fundId=" + this.drawFundId + "&purchaseDate=" + this.drawPurchaseDate
                 })
                 .then(res => {
                     let result = res.data;
