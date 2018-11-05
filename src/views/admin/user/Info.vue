@@ -1,5 +1,5 @@
 <template>
-    <div style="background-color: #ececec; padding: 20px;">
+    <div style="padding: 20px;">
     <a-row>
       <a-col :span="5">
        <a-card
@@ -33,7 +33,7 @@
         </a-col>
         <a-col :span="1"></a-col>
         <a-col :span="18">
-           <a-card title="用户信息" :bordered="false" hoverable style="height: 540px">
+           <a-card title="用户信息" hoverable style="height: 540px">
             <a-form :autoFormCreate="(form)=>{this.form = form}">
             <a-form-item label="用户ID"  :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="userId">
                 <a-input :disabled=true>

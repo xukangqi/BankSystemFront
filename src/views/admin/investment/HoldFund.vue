@@ -105,6 +105,15 @@
                 <a-row>
                   <a-col :span="3"/>
                   <a-col :span="18">
+                    <a-form-item label="持有份额" fieldDecoratorId="holdshare">
+                      <a-col :span="8" :offset="8">{{this.detailValue.share}}</a-col>
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="3"/>
+                </a-row>
+                <a-row>
+                  <a-col :span="3"/>
+                  <a-col :span="18">
                     <a-form-item label="赎回份额" fieldDecoratorId="share":fieldDecoratorOptions="{ rules: [{ required: true, message: '赎回份额不能为空' }]}">
                       <a-col :span="8" :offset="6"><a-input-number :min="1" size="large"/></a-col>
                     </a-form-item>
@@ -288,15 +297,14 @@ export default {
       this.drawFundId = value2;
       this.$axios({
                     method: "get",
-                    url: "/user/query/holddetail/account=" + this.drawAccount + "&fundId=" + this.drawFundId
+                    url: "/user/fund/query/holddetail?account=" + this.drawAccount + "&fundId=" + this.drawFundId
                     // url: "/investment/fundholddetail"
                 })
                 .then(res => {
                     let result = res.data;
                     let status = result.status;
-                    let fundHoldDetail = result.data.fundHoldDetail;
                     if (status == 200) {
-                      this.detailValue = fundHoldDetail;   
+                      this.detailValue = result.data;   
                     } else {
                         this.$notification.open({
                             message: "错误",
