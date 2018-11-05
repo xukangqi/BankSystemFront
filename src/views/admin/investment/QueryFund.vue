@@ -295,7 +295,7 @@ export default {
       this.$axios({
                     method: "get",
                     // url: "/investment/funddetail"
-                    url: "/user/fund/query/productdetail/fundId?" + this.drawFundId + "&purchaseDate=" + this.drawPurchaseDate
+                    url: "/user/fund/query/productdetail?fundId=" + this.drawFundId + "&purchaseDate=" + this.drawPurchaseDate
                 })
                 .then(res => {
                     let result = res.data;
