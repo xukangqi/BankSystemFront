@@ -213,7 +213,7 @@ const columns = [
       }
     } 
   },{
-      title: ' 基金单位净值',
+      title: '基金单位净值',
       dataIndex: 'netAssetValue',
   }, { title: '份额', dataIndex: 'share', key: 'share',
     sorter: (a, b) => a.share - b.share
