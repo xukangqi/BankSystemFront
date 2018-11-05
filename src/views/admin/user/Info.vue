@@ -4,11 +4,11 @@
       <a-col :span="5">
        <a-card
           hoverable
-          style="width: 300px;"
+          style="width: 300px; height: 540px"
         >
           <img
             alt=""
-            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+            src="https://raw.githubusercontent.com/XYY1010/WebImgSrc/master/test/a.jpg"
           />
               <template class="ant-card-actions" slot="actions">
                 <a-popover placement="bottom">
@@ -26,14 +26,14 @@
               </template>
               <a-card-meta
                 title="用户信息"
-                description="用户相关信息展示" style="margin-top:20px;">
+                description="用户相关信息展示" style="margin-top:10px;">
                 <a-avatar slot="avatar" style="color: #f56a00; backgroundColor: #fde3cf; margin-top:10px">U</a-avatar>
               </a-card-meta>
             </a-card>
         </a-col>
         <a-col :span="1"></a-col>
         <a-col :span="18">
-           <a-card title="用户信息" :bordered="false" hoverable>
+           <a-card title="用户信息" :bordered="false" hoverable style="height: 540px">
             <a-form :autoFormCreate="(form)=>{this.form = form}">
             <a-form-item label="用户ID"  :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="userId">
                 <a-input :disabled=true>
