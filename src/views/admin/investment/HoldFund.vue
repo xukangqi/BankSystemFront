@@ -324,9 +324,10 @@ export default {
                 if (!err) {
                   values.fundId = this.detailValue.fundId;
                   values.account = this.detailValue.account;
-                  console.log("Received values of form: ", values);this.$axios({
+                  console.log("Received values of form: ", values);
+                  this.$axios({
                     method: 'post',
-                    url: '/user/fund/create/tx/purchase',
+                    url: '/create/tx/redemption',
                     params: {
                       account: values.account,
                       fundId: values.fundId,
