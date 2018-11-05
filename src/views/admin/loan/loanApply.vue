@@ -52,11 +52,11 @@
       </a-popover>
     </a-form-item>
     <a-form-item label='还款账户密码' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="password"
-      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入还款账户密码' }]}">
+      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入账户密码' }]}">
       <a-input type="password" v-model="password" />
     </a-form-item>
     <a-form-item label='重复还款账户密码' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="password2"
-      :fieldDecoratorOptions="{rules: [{ required: true, message: '请再次输入还款账户密码'},{validator: this.checkPassword}]}">
+      :fieldDecoratorOptions="{rules: [{ required: true, message: '请再次输入账户密码'},{validator: this.checkPassword}]}">
       <a-input type="password" />
     </a-form-item>
     <a-form-item :wrapperCol="{ span: 12, offset: 5 }">
@@ -226,6 +226,7 @@
         url: '/loan/interestRate/1',
       }).then(res => {
         let result = res.data;
+        console.log(result);
         let status = result.status;
         if (status == 200) {
           this.interestRate.one = result.data.periodOne;

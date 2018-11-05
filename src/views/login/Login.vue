@@ -118,7 +118,10 @@
                   message: "修改成功",
                   description: '请重新登录'
                 });
-                this
+                this.detailform.resetFields();
+                setTimeout(()=>{
+                  this.visible=false;
+                },500);
               } else {
                 this.$notification.open({
                   message: "修改失败",

@@ -2,7 +2,7 @@
     <div>
         <a-table :dataSource="data" :columns="columns" :scroll="{ x: 1500}">
             <div slot="filterDropdown" slot-scope="{ setSelectedKeys, selectedKeys, confirm, clearFilters }" class='custom-filter-dropdown'>
-                <a-input ref="searchInput" placeholder='查找用户' :value="selectedKeys[0]" @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
+                <a-input ref="searchInput" placeholder='查找贷款账号' :value="selectedKeys[0]" @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
                     @pressEnter="() => handleSearch(selectedKeys, confirm)" />
                 <a-button type='primary' @click="() => handleSearch(selectedKeys, confirm)">Search</a-button>
                 <a-button @click="() => handleReset(clearFilters)">Reset</a-button>
@@ -30,14 +30,14 @@
                         <p>贷款账户:{{this.detailValue.account}}</p>
                         <p>贷款日期:{{formatDate(this.detailValue.transDate)}}</p>
                         <p>贷款金额:{{this.detailValue.loanAmount}}</p>
-                        <p>分期数目:{{this.detailValue.insCount}}</p>
+                        <p>分期数目:{{this.detailValue.insCount}}个月</p>
                         <p>贷款利率:{{this.detailValue.loanInterest}}</p>
                         <p>贷款总金额:{{this.detailValue.loanAmountSum}}</p>
                         <p>到期时间:{{formatDate(this.detailValue.expirationDate)}}</p>
                         <p>已收到还款:{{this.detailValue.recoveredAmount}}</p>
-                        <p>贷款状态:{{formatLoanStatus(this.detailValue.loanStatus)}}</p>
-                        <p>贷款类型:{{this.detailValue.loadTypeName}}</p>
-                        <p>审核人信息:{{this.detailValue.reviewId}}</p>
+                        <p>贷款状态:{{this.detailValue.loanStatus}}</p>
+                        <p>贷款类型:{{this.detailValue.loanTypeName}}</p>
+                        <p>审核人信息:{{this.detailValue.reviewerId}}</p>
                     </a-collapse-panel>
                      <a-collapse-panel header="分期详情" key="2" :disabled='false'>
                         <a-table :columns="paymentColumns" :dataSource="loanPayment">
@@ -126,7 +126,7 @@
                 formLayout: "horizontal",
                 data: [],
                 password:undefined,
-                DrawTransId:0,
+                DrawTransId:undefined,
                 detailValue: {},
                 loanPaylog: [],
                 loanPayment: [],
@@ -239,7 +239,7 @@
                     dataIndex: "paymentAmount",
                     key: "paymentAmount"
                 },{
-                title: "违约金",
+                title: "已还金额",
                     dataIndex: "reimbursement",
                     key: "reimbursement"
                 },{
@@ -289,7 +289,7 @@
                         let result = res.data;
                         let status = result.status;
                         if (status == 200) {
-                            this.detailValue = result.data.loan;
+                            this.detailValue = result.data;
                         } else {
                             this.$notification.open({
                                 message: "错误",
@@ -298,7 +298,7 @@
                         }
                     })
                     .catch(err => {
-                        console.log("通信失败，请稍后再试");
+                        console.log(err);
                         this.$notification.open({
                             message: "错误",
                             description: "服务器开小差了,请稍后再试"
@@ -326,7 +326,7 @@
                         }
                     })
                     .catch(err => {
-                        console.log("通信失败，请稍后再试");
+                        console.log(err);
                         this.$notification.open({
                             message: "错误",
                             description: "服务器开小差了,请稍后再试"
@@ -355,7 +355,7 @@
                         }
                     })
                     .catch(err => {
-                        console.log("通信失败，请稍后再试");
+                        console.log(err);
                         this.$notification.open({
                             message: "错误",
                             description: "服务器开小差了,请稍后再试"
@@ -385,7 +385,6 @@
                 return status;
             },
             checkID(rule, value, callback) {
-                console.log(value);
                 if (typeof (value) === 'undefined') {
                     callback('请输入申请人身份证号');
                 }
@@ -418,8 +417,7 @@
                 }
             },
             checkPassword(rule, value, callback){
-                console.log(value);
-                console.log(this.password);
+ 
                if (typeof (value) == undefined) {
                     callback('请再次输入密码');
                 }else{
@@ -456,9 +454,10 @@
                                 });
                                 // this.$router.push('/admin/loan/manage');
                                 this.form.resetFields();
+                                this.updateData();
                                 setTimeout(()=>{
                                 this.visible=false;
-                                },1000);
+                                },500);
                             } else {
                                 this.$notification.open({
                                     message: "提交申请失败",
@@ -474,10 +473,41 @@
                         })
                     }
                 });
+            },
+            updateData(){
+                this.$axios({
+                    method: "get",
+                    url: "/loan/allRecord"
+                })
+                .then(res => {
+                    let result = res.data;
+                    let status = result.status;
+                    if (status == 200) {
+                        for (let i = 0; i < result.data.length; i++) {
+                            result.data[i].transDate = this.formatDate(result.data[i].transDate);
+                            // result.data[i].loanStatus = this.formatLoanStatus(parseInt(result.data[i].loanStatus));
+                            
+                            // result.data[i].transId=result.data[i].transId.toString();
+                        }
+                        this.data = result.data;
+                        // console.log(result.data);
+                    } else {
+                        this.$notification.open({
+                            message: "错误",
+                            description: result.msg
+                        });
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    this.$notification.open({
+                        message: "错误",
+                        description: "服务器开小差了,请稍后再试"
+                    });
+                });
             }
         },
         mounted() {
-            // console.log("开始通信");
             this.$axios({
                     method: "get",
                     url: "/loan/allRecord"
@@ -489,9 +519,11 @@
                         for (let i = 0; i < result.data.length; i++) {
                             result.data[i].transDate = this.formatDate(result.data[i].transDate);
                             // result.data[i].loanStatus = this.formatLoanStatus(parseInt(result.data[i].loanStatus));
+                            
                             // result.data[i].transId=result.data[i].transId.toString();
                         }
                         this.data = result.data;
+                        // console.log(result.data);
                     } else {
                         this.$notification.open({
                             message: "错误",
@@ -500,7 +532,7 @@
                     }
                 })
                 .catch(err => {
-                    console.log("通信失败，请稍后再试");
+                    console.log(err);
                     this.$notification.open({
                         message: "错误",
                         description: "服务器开小差了,请稍后再试"
