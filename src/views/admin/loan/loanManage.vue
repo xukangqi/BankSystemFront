@@ -454,6 +454,7 @@
                                 });
                                 // this.$router.push('/admin/loan/manage');
                                 this.form.resetFields();
+                                this.updateData();
                                 setTimeout(()=>{
                                 this.visible=false;
                                 },500);
@@ -472,10 +473,41 @@
                         })
                     }
                 });
+            },
+            updateData(){
+                this.$axios({
+                    method: "get",
+                    url: "/loan/allRecord"
+                })
+                .then(res => {
+                    let result = res.data;
+                    let status = result.status;
+                    if (status == 200) {
+                        for (let i = 0; i < result.data.length; i++) {
+                            result.data[i].transDate = this.formatDate(result.data[i].transDate);
+                            // result.data[i].loanStatus = this.formatLoanStatus(parseInt(result.data[i].loanStatus));
+                            
+                            // result.data[i].transId=result.data[i].transId.toString();
+                        }
+                        this.data = result.data;
+                        // console.log(result.data);
+                    } else {
+                        this.$notification.open({
+                            message: "错误",
+                            description: result.msg
+                        });
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    this.$notification.open({
+                        message: "错误",
+                        description: "服务器开小差了,请稍后再试"
+                    });
+                });
             }
         },
         mounted() {
-            // console.log("开始通信");
             this.$axios({
                     method: "get",
                     url: "/loan/allRecord"
