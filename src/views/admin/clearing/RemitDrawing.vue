@@ -22,8 +22,8 @@
         <a-row>
           <a-col :span="3"/>
           <a-col :span="18">
-            <a-form-item label="转账人" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="name" :fieldDecoratorOptions="{ rules: [{ required: true, message: '姓名不能为空' }]}">
-              <a-input placeholder="请输入转账人姓名"/>
+            <a-form-item label="收款人" :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="name" :fieldDecoratorOptions="{ rules: [{ required: true, message: '姓名不能为空' }]}">
+              <a-input placeholder="请输入收款人姓名"/>
             </a-form-item>
           </a-col>
           <a-col :span="3"/>

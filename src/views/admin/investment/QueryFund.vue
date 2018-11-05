@@ -180,8 +180,8 @@ export default {
     this.reviewerId=this.$store.getters.user.userId;
 		this.$axios({
                     method: "get",
-                    url: "/investment/fundproduct"
-                    // url: "/user/fund/query/product"
+                    // url: "/investment/fundproduct"
+                    url: "/user/fund/query/product"
                 })
                 .then(res => {
                     let result = res.data;
