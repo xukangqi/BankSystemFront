@@ -447,6 +447,18 @@ export const bank = [{
         return result;
     }
 }, {
+    path: RegExp('/clearing/remitdrawingform' + ".*"),
+    type: 'post',
+    data(option) {
+        let result = {
+            status: 200,
+            msg: '',
+            data: {}
+        };
+
+        return result;
+    }
+}, {
     path: RegExp('/clearing/transferapplyform' + ".*"),
     type: 'post',
     data(option) {
@@ -636,4 +648,25 @@ export const bank = [{
        }
         return result;
     }
+}, {
+    path: '/investment/fundholddetail',
+    type: 'get',
+    data(option) {
+        let req = JSON.parse(option.body);
+        let result = {
+            status: 200,
+            msg: '',
+            data: {
+                fundHoldDetail:{}
+            }
+        };
+           let detail={
+            custId:Random.integer(0, 10000000),
+            account: Random.integer(0, 10000000),
+            fundId: Random.integer(0, 10000000)
+           }; 
+           result.data.fundHoldDetail = detail;
+        return result;
+    }
+
 }];

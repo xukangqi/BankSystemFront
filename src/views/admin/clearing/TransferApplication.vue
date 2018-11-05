@@ -40,7 +40,8 @@
 	export default {
 		data() {
 			return {
-				password: undefined
+				password: undefined,
+				retunData: ''
 			}
 		},
 		methods: {
@@ -61,7 +62,7 @@
 		            console.log("Received values of form: ", values);
 		            this.$axios({
 	                    method: 'post',
-	                    url: '/clearing/transferapplyform',
+	                    url: '/user/transfer/create',
 	                    params: {
 	                    	name: values.name,
 	                    	phone: values.phone,
@@ -73,9 +74,10 @@
 	                  }).then(res => {
 	                    let result = res.data;
 	                    if (result.status == 200) {
+	                    	this.retunData = result.data;
 	                      this.$notification.open({
 	                        message: "转账申请成功！",
-	                        description: "提交申请成功！"
+	                        description: "转账流水号：" + this.retunData
 	                      });
 	                    } else {
 	                      this.$notification.open({

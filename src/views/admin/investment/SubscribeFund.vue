@@ -232,6 +232,7 @@ export default {
       detailValue:{},
       visible:false,
       searchText: '',
+      drawFundTxId: '',
       columns,
       }
   }, 
@@ -239,7 +240,7 @@ export default {
 		this.loading = true;
 		this.$axios({
                     method: "get",
-                    url: "/investment/fundlog"
+                    url: "/user/fund/query/tx"
                 })
                 .then(res => {
                     let result = res.data;
@@ -279,9 +280,10 @@ export default {
     },
   	showDrawer(value) {
       this.visible = true;
+      this.drawFundTxId = value;
       this.$axios({
                     method: "get",
-                    url: "/investment/fundlogdetail"
+                    url: "/query/txdetail/" + this.drawFundTxId
                 })
                 .then(res => {
                     let result = res.data;

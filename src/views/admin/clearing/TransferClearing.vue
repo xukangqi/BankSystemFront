@@ -44,7 +44,7 @@ export default {
 		this.loading = true;
 		this.$axios({
                     method: "get",
-                    url: "/clearing/transferlog"
+                    url: "/user/transfer/query"
                 })
                 .then(res => {
                     let result = res.data;
