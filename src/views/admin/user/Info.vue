@@ -4,7 +4,7 @@
       <a-col :span="5">
        <a-card
           hoverable
-          style="width: 100% height: 540px"
+          style="width: 300px; height: 540px"
         >
           <img
             alt=""
@@ -31,7 +31,7 @@
               </a-card-meta>
             </a-card>
         </a-col>
-        <a-col :span="16" :offset="2">
+        <a-col :span="16" :offset="3">
            <a-card title="用户信息" hoverable style="height: 540px">
             <a-form :autoFormCreate="(form)=>{this.form = form}">
             <a-form-item label="用户ID"  :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="userId">
