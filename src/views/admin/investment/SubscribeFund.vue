@@ -93,7 +93,7 @@
 	    	<p>账户号：{{detailValue.account}}</p>
 	    	<p>基金代码：{{detailValue.fundId}}</p>
 	    	<p>交易类型：{{detailValue.type}}</p>
-	    	<p>投资金额：{{detailValue.amount}}</p>
+	    	<p>金额：{{detailValue.amount}}</p>
 	    	<p>份额：{{detailValue.share}}</p>
 	    	<p>交易时间：{{detailValue.txDate}}</p>
 	    	<p>审核人ID：{{detailValue.reviewId}}</p>
@@ -196,7 +196,7 @@ const columns = [
        ],
     onFilter: (value, record) => record.type == value
   },
-  { title: '投资金额', dataIndex: 'amount', key: 'amount' },
+  { title: '金额', dataIndex: 'amount', key: 'amount' },
   { title: '份额', dataIndex: 'share', key: 'share' },
   { title: '交易时间', dataIndex: 'txDate', key: 'txDate' },
   { title: '审核人ID', dataIndex: 'reviewId', key: 'reviewId',
