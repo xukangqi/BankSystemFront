@@ -86,14 +86,29 @@ export default {
             menuItems: [
                 {
                     id: 51,
-                    name: '汇票业务',
-                    link: '/admin/clearing/draft'
+                    name: '汇款申请',
+                    link: '/admin/clearing/remit-application'
                 },
                 {
                     id: 52,
-                    name: '转账业务',
-                    link: '/admin/clearing/transfer'
-                }              
+                    name: '汇款清算',
+                    link: '/admin/clearing/remit-clearing'
+                },
+                {
+                    id: 53,
+                    name: '汇款提取',
+                    link: '/admin/clearing/remit-drawing'
+                },
+                {
+                    id: 54,
+                    name: '转账申请',
+                    link: '/admin/clearing/transfer-application'
+                },
+                {
+                    id: 55,
+                    name: '转账清算',
+                    link: '/admin/clearing/transfer-clearing'
+                }
             ]
         },
         {

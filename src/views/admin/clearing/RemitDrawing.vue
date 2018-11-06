@@ -1,6 +1,7 @@
 <template>
 	<div>
-		<a-form @submit="handleSubmit" :autoFormCreate="(form)=>{this.form = form}">
+		<a-form @submit="handleSubmit" :autoFormCreate="(form)=>{this.form = form}" style="margin-top:20px">
+		<h2 style="margin-left:38%;margin-bottom:20px">汇款提取</h2>
         <a-row>
           <a-col :span="3"/>
           <a-col :span="18">
@@ -91,7 +92,9 @@
 	                        message: "汇款提取成功！",
 	                        description: "提取成功！"
 	                      });
-	                      this.form.resetFields();
+	                      this.form.resetFields();setTimeout(() => {
+                  			this.$router.push('/admin/clearing/remit-clearing');
+                		  }, 100);
 	                    } else {
 	                      this.$notification.open({
 	                        message: "汇款提取失败！",

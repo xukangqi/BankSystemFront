@@ -1,5 +1,6 @@
 <template>
-	<a-form @submit="handleSubmit" :autoFormCreate="(form)=>{this.form = form}">
+	<a-form @submit="handleSubmit" :autoFormCreate="(form)=>{this.form = form}" style="margin-top:20px">
+		<h2 style="margin-left:38%;margin-bottom:20px">汇款申请</h2>
 		<a-form-item label='申请人' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="name"
 	      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入申请人姓名' }]}">
 	     <a-input />
@@ -76,6 +77,9 @@
 	                    if (result.status == 200) {
                       	  this.form.resetFields();
 	                      this.returnData = result.data;
+	                      setTimeout(() => {
+                  			this.$router.push('/admin/clearing/remit-clearing');
+                		  }, 100);
 	                      this.$notification.open({
 	                        message: "汇款申请成功！",
 	                        description: "汇票流水号为：" + this.returnData

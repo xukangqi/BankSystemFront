@@ -1,5 +1,6 @@
 <template>
-	<a-form @submit="handleSubmit" :autoFormCreate="(form)=>{this.form = form}">
+	<a-form @submit="handleSubmit" :autoFormCreate="(form)=>{this.form = form}" style="margin-top:20px">
+		<h2 style="margin-left:38%;margin-bottom:20px">转账申请</h2>
 		<a-form-item label='申请人' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="name"
 	      :fieldDecoratorOptions="{rules: [{ required: true, message: '请输入申请人姓名' }]}">
 	     <a-input />
@@ -75,6 +76,10 @@
 	                    let result = res.data;
 	                    if (result.status == 200) {
 	                    	this.retunData = result.data;
+	                    	setTimeout(() => {
+                  			this.$router.push('/admin/clearing/transfer-clearing');
+                		  }, 100);
+                      	  this.form.resetFields();
 	                      this.$notification.open({
 	                        message: "转账申请成功！",
 	                        description: "转账流水号：" + this.retunData

@@ -131,14 +131,29 @@ const router = new Router({
             meta: {requiresAuth: true},
             children: [
                 {
-                    path: 'draft',
-                    name: 'draft',
-                    component: () => import('../views/admin/clearing/draft.vue')
+                    path: 'remit-application',
+                    name: 'remit-application',
+                    component: () => import('../views/admin/clearing/RemitApplication.vue')
                 },
                 {
-                    path: 'transfer',
-                    name: 'transfer',
-                    component: () => import('../views/admin/clearing/transfer.vue')
+                    path: 'remit-clearing',
+                    name: 'remit-clearing',
+                    component: () => import('../views/admin/clearing/RemitClearing.vue')
+                },
+                {
+                    path: 'remit-drawing',
+                    name: 'remit-drawing',
+                    component: () => import('../views/admin/clearing/RemitDrawing.vue')
+                },
+                {
+                    path: 'transfer-application',
+                    name: 'transfer-application',
+                    component: () => import('../views/admin/clearing/TransferApplication.vue')
+                },
+                {
+                    path: 'transfer-clearing',
+                    name: 'transfer-clearing',
+                    component: () => import('../views/admin/clearing/TransferClearing.vue')
                 }
             ]
         },{
