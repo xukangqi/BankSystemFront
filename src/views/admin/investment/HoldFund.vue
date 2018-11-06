@@ -329,7 +329,7 @@ export default {
                   console.log("Received values of form: ", values);
                   this.$axios({
                     method: 'post',
-                    url: '/create/tx/redemption',
+                    url: '/user/fund/create/tx/redemption',
                     params: {
                       account: values.account,
                       fundId: values.fundId,
