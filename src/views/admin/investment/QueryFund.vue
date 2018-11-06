@@ -228,7 +228,7 @@ export default {
       	{
         title: '基金代码',
 		dataIndex: 'fundId',
-		key:'fundId',
+    key:'fundId',
         scopedSlots: {
           filterDropdown: 'filterDropdown',
           filterIcon: 'filterIcon',
@@ -336,7 +336,7 @@ export default {
       this.visible = false
     },
     formatDate(value) {
-                let date = new Date(parseInt(value) / 1000);
+                let date = new Date(parseInt(value));
                 return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     },
     handleSubmit(e) {
@@ -368,6 +368,7 @@ export default {
                         description: "提交申请成功！"
                       });
                     } else {
+                      console.log(result);
                       this.$notification.open({
                         message: "基金购买申请失败！",
                         description: result.msg
