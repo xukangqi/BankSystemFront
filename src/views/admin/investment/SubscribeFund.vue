@@ -322,7 +322,7 @@ export default {
     	return dataDetail[i];
     },
     formatDate(value) {
-        let date = new Date(parseInt(value) / 1000);
+        let date = new Date(parseInt(value));
         return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     }
   }
