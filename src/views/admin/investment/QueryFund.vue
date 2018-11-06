@@ -39,16 +39,16 @@
     >
       
 
-      <a-collapse defaultActiveKey="1" class="customPanelStyle">
+      <a-collapse class="customPanelStyle">
         <a-collapse-panel header="基金产品详情" key="1">
           <div style="background:#ECECEC; padding:30px;">
             <a-card :bordered="false" style="width: 300px" hoverable>
-              <p>基金代码：{{detailValue.fundId}}</p>
-              <p>交易类型：{{detailValue.type}}</p>
-              <p>申购费率：{{detailValue.purchaseRate}}%</p>
-              <p>基金单位净值：{{detailValue.netAssetValue}}</p>
-              <p>赎回费率：{{detailValue.redemptionRate}}%</p>
-              <p>记录时间：{{detailValue.purchaseDate}}</p>
+              <p>基金代码：{{this.detailValue.fundId}}</p>
+              <p>交易类型：{{this.detailValue.type}}</p>
+              <p>申购费率：{{this.detailValue.purchaseRate}}%</p>
+              <p>基金单位净值：{{this.detailValue.netAssetValue}}</p>
+              <p>赎回费率：{{this.detailValue.redemptionRate}}%</p>
+              <p>记录时间：{{this.detailValue.purchaseDate}}</p>
             </a-card>
            </div>
         </a-collapse-panel>
@@ -215,6 +215,7 @@ export default {
   data () {
     return {
       data:[],
+      formateDate: [],
       loading:false,
       visible: false,
       searchText: '',
@@ -295,19 +296,28 @@ export default {
       this.$axios({
                     method: "get",
                     // url: "/investment/funddetail"
-                    url: "/user/fund/query/productdetail?fundId=" + this.drawFundId + "&purchaseDate=" + this.drawPurchaseDate
+                    url: "/user/fund/query/productdetail?fundId=" + this.drawFundId
                 })
                 .then(res => {
+                    let fundDetail;
                     let result = res.data;
                     let status = result.status;
-                    let fundDetail = result.data.fundDetail;
                     if (status == 200) {
-                      fundDetail.type = (fundDetail.type==0?"认购":"申购");
-                      fundDetail.purchaseRate = fundDetail.purchaseRate.toFixed(2);
-                      fundDetail.netAssetValue = fundDetail.netAssetValue.toFixed(4);
-                      fundDetail.redemptionRate = fundDetail.redemptionRate.toFixed(2);
-                      fundDetail.purchaseDate = this.formatDate(fundDetail.purchaseDate);
-                      this.detailValue = fundDetail;   
+                      let array = result.data;
+                      let i;
+                      for(i=0; i<array.length; i++) {
+                        if(this.formatDate(array[i].purchaseDate) == this.drawPurchaseDate) {
+                          fundDetail = array[i];
+                          fundDetail.type = (array[i].type==0?"认购":"申购");
+                          fundDetail.purchaseRate = array[i].purchaseRate.toFixed(2);
+                          fundDetail.netAssetValue = array[i].netAssetValue.toFixed(4);
+                          fundDetail.redemptionRate = array[i].redemptionRate.toFixed(2);
+                          fundDetail.purchaseDate = this.formatDate(array[i].purchaseDate);
+                          break;
+                        }
+                      }
+                      this.detailValue = fundDetail; 
+                      console.log(this.detailValue.fundId);
                     } else {
                         this.$notification.open({
                             message: "错误",
