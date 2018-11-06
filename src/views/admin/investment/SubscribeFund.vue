@@ -288,8 +288,8 @@ export default {
                 .then(res => {
                     let result = res.data;
                     let status = result.status;
-                    let fundLogDetail = result.data.fundLogDetail;
                     if (status == 200) {
+                      let fundLogDetail = result.data;
                       fundLogDetail.type = (fundLogDetail.type==0?"认购/申购":"赎回");
                       fundLogDetail.txDate = this.formatDate(fundLogDetail.txDate);
                       this.detailValue = fundLogDetail;   
