@@ -317,7 +317,6 @@ export default {
                         }
                       }
                       this.detailValue = fundDetail; 
-                      console.log(this.detailValue.fundId);
                     } else {
                         this.$notification.open({
                             message: "错误",
@@ -362,6 +361,8 @@ export default {
                   }).then(res => {
                     let result = res.data;
                     if (result.status == 200) {
+                      this.form.resetFields();
+                      this.visible = false;
                       this.$notification.open({
                         message: "基金购买申请成功！",
                         description: "提交申请成功！"

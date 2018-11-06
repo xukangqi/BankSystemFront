@@ -74,6 +74,7 @@
 	                  }).then(res => {
 	                    let result = res.data;
 	                    if (result.status == 200) {
+                      	  this.form.resetFields();
 	                      this.returnData = result.data;
 	                      this.$notification.open({
 	                        message: "汇款申请成功！",

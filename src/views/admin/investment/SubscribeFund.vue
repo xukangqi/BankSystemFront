@@ -124,7 +124,7 @@
 <script>
            
 const columns = [
-  { title: '交易流水号', width: 150, dataIndex: 'fundTxId', key: 'fundTxId', fixed: 'left',
+  { title: '交易流水号', width: 200, dataIndex: 'fundTxId', key: 'fundTxId', fixed: 'left',
     scopedSlots: {
       filterDropdown: 'filterDropdown1',
       filterIcon: 'filterIcon',
@@ -139,7 +139,7 @@ const columns = [
       }
     }
   },
-  { title: '用户ID', width: 150, dataIndex: 'custId', key: 'custId', fixed: 'left',
+  { title: '用户ID', width: 200, dataIndex: 'custId', key: 'custId', fixed: 'left',
     scopedSlots: {
       filterDropdown: 'filterDropdown2',
       filterIcon: 'filterIcon',
