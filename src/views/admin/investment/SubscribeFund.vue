@@ -139,7 +139,7 @@ const columns = [
       }
     }
   },
-  { title: '用户ID', width: 200, dataIndex: 'custId', key: 'custId', fixed: 'left',
+  { title: '用户ID', dataIndex: 'custId', key: 'custId',
     scopedSlots: {
       filterDropdown: 'filterDropdown2',
       filterIcon: 'filterIcon',

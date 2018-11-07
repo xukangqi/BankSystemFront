@@ -60,7 +60,7 @@
                   <a-col :span="3"/>
                   <a-col :span="18">
                     <a-form-item label="基金代码" fieldDecoratorId="fundId">
-                      <a-col :span="8" :offset="6">{{this.detailValue.fundId}}</a-col>
+                      <a-col :span="15" :offset="6">{{this.detailValue.fundId}}</a-col>
                     </a-form-item>
                   </a-col>
                   <a-col :span="3"/>
